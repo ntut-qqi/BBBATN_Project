@@ -102,8 +102,11 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
+		
 		CMovingBitmap background;
-		void show_image_by_phase();
+		CMovingBitmap frame;
+		CMovingBitmap box;
+		void load_background();
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

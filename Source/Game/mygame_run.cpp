@@ -21,19 +21,18 @@ CGameStateRun::~CGameStateRun()
 {
 }
 
-void CGameStateRun::OnBeginState()
+void CGameStateRun::OnBeginState()						// 設定每次重玩所需的變數
 {
 }
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	
+
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
-	background.LoadBitmapByString({"resources/backup.bmp"});
-	background.SetTopLeft(0, 0);
+	load_background();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -68,9 +67,22 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
-	show_image_by_phase();
+	background.ShowBitmap();
+	frame.ShowBitmap();
+	box.ShowBitmap();
+	
 }
 
-void CGameStateRun::show_image_by_phase() {
-	background.ShowBitmap(1);
-}
+void CGameStateRun::load_background() {
+	background.LoadBitmapByString({ "resources/game_background.bmp" });
+	background.SetTopLeft(0, 0);
+
+	frame.LoadBitmapByString({ "resources/frame.bmp" });
+	frame.SetTopLeft(42, 160);
+
+	
+	box.LoadBitmapByString({ "resources/box-blue.bmp"},RGB(0,0,0));
+	box.SetTopLeft(46+52*6, 164+52*7);
+
+
+	}
