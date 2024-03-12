@@ -81,6 +81,7 @@ void CGameStateRun::load_background() {
 	frame.SetTopLeft(42, 160);
 
 	
+
 	box.LoadBitmapByString({ "resources/box-blue.bmp"},RGB(0,0,0));
 	box.SetTopLeft(46+52*6, 164+52*7);
 
