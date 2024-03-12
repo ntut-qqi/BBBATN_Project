@@ -96,7 +96,7 @@ void CGameStateInit::OnShow()
 }
 
 void CGameStateInit::load_background() {
-	background.LoadBitmapByString({ "resources/aa.bmp" });
+	background.LoadBitmapByString({ "resources/start_background.bmp" });
 	background.SetTopLeft(0, 0);
 
 	character.LoadBitmapByString({ "resources/char_init.bmp"},RGB(0, 0, 0));
