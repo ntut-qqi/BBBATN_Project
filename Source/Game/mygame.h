@@ -106,6 +106,8 @@ namespace game_framework {
 		CMovingBitmap background;
 		CMovingBitmap frame;
 		CMovingBitmap box;
+		CMovingBitmap box_list[3];
+		CMovingBitmap ball[3];
 		void load_background();
 	};
 
