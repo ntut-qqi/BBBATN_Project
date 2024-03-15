@@ -33,6 +33,14 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	load_background();
+	for (int i = 0; i < 2; i++) {
+		box_list[i].LoadBitmap({ "resources/box-blue.bmp","resources/box-blue.bmp" }, RGB(0, 0, 0));
+		box_list[i].SetTopLeft(46+52*i, 164);
+	}
+	for (int j = 0; j < 3; j++) {
+		ball[j].LoadBitmap({ "resources/ball.bmp","resources/ball.bmp","resources/ball.bmp" }, RGB(0, 0, 0));
+		ball[j].SetTopLeft(46 + 52 * j, 200);
+	}
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -70,8 +78,17 @@ void CGameStateRun::OnShow()
 	background.ShowBitmap();
 	frame.ShowBitmap();
 	box.ShowBitmap();
+	for (int i = 0; i < 2; i++) {
+		box_list[i].ShowBitmap();
+	}
+
+	for (int j = 0; j < 2; j++) {				
+		ball[j].ShowBitmap();
+	}
 	
 }
+
+
 
 void CGameStateRun::load_background() {
 	background.LoadBitmapByString({ "resources/game_background.bmp" });
@@ -80,7 +97,7 @@ void CGameStateRun::load_background() {
 	frame.LoadBitmapByString({ "resources/frame.bmp" });
 	frame.SetTopLeft(42, 160);
 
-	
+
 
 	box.LoadBitmapByString({ "resources/box-blue.bmp"},RGB(0,0,0));
 	box.SetTopLeft(46+52*6, 164+52*7);
