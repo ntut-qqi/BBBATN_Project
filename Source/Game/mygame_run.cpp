@@ -39,7 +39,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}
 	for (int j = 0; j < 3; j++) {
 		ball[j].LoadBitmap({ "resources/ball.bmp","resources/ball.bmp","resources/ball.bmp" }, RGB(0, 0, 0));
-		ball[j].SetTopLeft(46 + 52 * j, 200);
+		ball[j].SetTopLeft(77 + 52 * j, 344);
 	}
 }
 
@@ -80,15 +80,9 @@ void CGameStateRun::OnShow()
 	box.ShowBitmap();
 	for (int i = 0; i < 2; i++) {
 		box_list[i].ShowBitmap();
-	}
-
-	for (int j = 0; j < 2; j++) {				
-		ball[j].ShowBitmap();
-	}
-	
+	};
+	checkCanvasCollision();
 }
-
-
 
 void CGameStateRun::load_background() {
 	background.LoadBitmapByString({ "resources/game_background.bmp" });
@@ -97,10 +91,22 @@ void CGameStateRun::load_background() {
 	frame.LoadBitmapByString({ "resources/frame.bmp" });
 	frame.SetTopLeft(42, 160);
 
-
-
 	box.LoadBitmapByString({ "resources/box-blue.bmp"},RGB(0,0,0));
 	box.SetTopLeft(46+52*6, 164+52*7);
 
-
 	}
+
+void CGameStateRun::checkCanvasCollision() {
+	
+	//ball[0].UnshowBitmap();
+	if (ball[0].GetLeft() <= 54 || 400 < ball[0].GetLeft()) {
+		dx *= -1;
+		//dy *= -1;
+	}
+	else if (ball[0].GetTop() <= 164 || ball[0].GetTop() >= 560) {
+		//dx *= -1;
+		dy *= -1;
+	}
+	ball[0].SetTopLeft(ball[0].GetLeft() + dx, ball[0].GetTop() + dy);
+	ball[0].ShowBitmap();
+}
