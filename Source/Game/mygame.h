@@ -55,6 +55,8 @@ namespace game_framework {
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
 
+	
+
 	class CGameStateInit : public CGameState {
 	public:
 		CGameStateInit(CGame *g);
@@ -62,6 +64,9 @@ namespace game_framework {
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnKeyUp(UINT, UINT, UINT); 				// 處理鍵盤Up的動作
 		void OnLButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
+
+		
+
 	protected:
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
@@ -111,6 +116,7 @@ namespace game_framework {
 		CMovingBitmap box;
 		CMovingBitmap box_list[3];
 		CMovingBitmap ball[3];
+		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 	};
@@ -123,13 +129,19 @@ namespace game_framework {
 	class CGameStateOver : public CGameState {
 	public:
 		CGameStateOver(CGame *g);
+		void OnLButtonDown(UINT nFlags, CPoint point);// 處理滑鼠的動作
 		void OnBeginState();							// 設定每次重玩所需的變數
 		void OnInit();
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
+		CMovingBitmap background;
 		int counter;	// 倒數之計數器
+		void show_text();
+		void load_background();
+
+
 	};
 
 }

@@ -44,7 +44,10 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateInit::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	GotoGameState(GAME_STATE_RUN);		// ¤Á´«¦ÜGAME_STATE_RUN
+	if ((point.x >= 143 && point.x<=295) && (point.y >= 548 && point.y <= 618))
+	{
+		GotoGameState(GAME_STATE_RUN);  
+	}
 }
 
 
