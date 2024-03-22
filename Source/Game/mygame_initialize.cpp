@@ -111,3 +111,26 @@ void CGameStateInit::load_background() {
 	start.LoadBitmapByString({ "resources/play-button.bmp" }, RGB(0, 0, 0));
 	start.SetTopLeft(143, 548);
 }
+/*
+Box::Box(int box_count, int x, int y) {
+	this->box_count = box_count;
+
+	if (box_count >= 16 && box_count <= 20) {
+		this->image.LoadBitmapByString({ "resources/box-blue.bmp" });
+	}
+	else if (box_count >= 12 && box_count <= 16) {
+		this->image.LoadBitmapByString({ "resources/box-purple.bmp" });
+	}
+	else if (box_count >= 8 && box_count <= 12) {
+		this->image.LoadBitmapByString({ "resources/box-red.bmp" });
+	}
+	else if (box_count >= 4 && box_count <= 8) {
+		this->image.LoadBitmapByString({ "resources/box-orange.bmp" });
+	}
+	else if (box_count >= 1 && box_count <= 4) {
+		this->image.LoadBitmapByString({ "resources/box-yellow.bmp" });
+	}
+	image.SetTopLeft(x, y);
+	image.ShowBitmap();
+}
+*/

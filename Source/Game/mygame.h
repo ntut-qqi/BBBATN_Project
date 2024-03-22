@@ -50,6 +50,18 @@ namespace game_framework {
 		AUDIO_NTUT				// 2
 	};
 
+	class Box {
+	public:
+		Box(int box_count, int x, int y);
+		int box_count;
+		CMovingBitmap image;
+		void Init();
+		void ShowImage();
+		void ShowText();
+		int x;
+		int y;
+	};
+
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲開頭畫面物件
 	// 每個Member function的Implementation都要弄懂
@@ -103,18 +115,17 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		int dx=5;
-		int dy = 5;
+		int dx=1;
+		int dy = 1;
 
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		
 		CMovingBitmap background;
 		CMovingBitmap frame;
-		CMovingBitmap box;
-		CMovingBitmap box_list[3];
+		Box box = Box(10, 100, 150);
+
 		CMovingBitmap ball[3];
 		CMovingBitmap question;
 		void load_background();
@@ -143,5 +154,6 @@ namespace game_framework {
 
 
 	};
-
 }
+
+	

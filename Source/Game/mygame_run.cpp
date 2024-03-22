@@ -33,14 +33,15 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	load_background();
-	for (int i = 0; i < 2; i++) {
-		box_list[i].LoadBitmap({ "resources/box-blue.bmp","resources/box-blue.bmp" }, RGB(0, 0, 0));
-		box_list[i].SetTopLeft(46+52*i, 164);
-	}
+	
 	for (int j = 0; j < 3; j++) {
 		ball[j].LoadBitmap({ "resources/ball.bmp","resources/ball.bmp","resources/ball.bmp" }, RGB(0, 0, 0));
-		ball[j].SetTopLeft(77 + 52 * j, 344);
+		ball[j].SetTopLeft(240,540);
+		ball[j].ShowBitmap();
 	}
+	box.Init();
+
+	
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -55,6 +56,8 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
+	GotoGameState(GAME_STATE_OVER);
+
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -67,7 +70,7 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	//GotoGameState(GAME_STATE_OVER);
+	GotoGameState(GAME_STATE_OVER);
 
 }
 
@@ -79,11 +82,12 @@ void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
 	frame.ShowBitmap();
-	box.ShowBitmap();
-	for (int i = 0; i < 2; i++) {
-		box_list[i].ShowBitmap();
-	};
+
+
+
 	checkCanvasCollision();
+	
+	box.ShowImage();
 }
 
 void CGameStateRun::load_background() {
@@ -93,22 +97,50 @@ void CGameStateRun::load_background() {
 	frame.LoadBitmapByString({ "resources/frame.bmp" });
 	frame.SetTopLeft(42, 160);
 
-	box.LoadBitmapByString({ "resources/box-blue.bmp"},RGB(0,0,0));
-	box.SetTopLeft(46+52*6, 164+52*7);
 
 	}
 
-void CGameStateRun::checkCanvasCollision() {
+void CGameStateRun::checkCanvasCollision() {								//外框碰撞
 	
 	//ball[0].UnshowBitmap();
-	if (ball[0].GetLeft() <= 54 || 400 < ball[0].GetLeft()) {
+	if (ball[0].GetLeft() <= 54 || ball[0].GetLeft() >= 400) {
 		dx *= -1;
-		//dy *= -1;
+		
 	}
 	else if (ball[0].GetTop() <= 164 || ball[0].GetTop() >= 560) {
-		//dx *= -1;
 		dy *= -1;
 	}
 	ball[0].SetTopLeft(ball[0].GetLeft() + dx, ball[0].GetTop() + dy);
 	ball[0].ShowBitmap();
+}
+
+
+Box::Box(int box_count ,int x,int y){
+	this->box_count = box_count;
+	this->x = x;
+	this->y= y;
+}	
+
+void Box::ShowImage(){
+	image.ShowBitmap();
+}
+
+void Box::Init() {
+	if (box_count >= 16 && box_count <= 20) {
+		this->image.LoadBitmapByString({ "resources/box-blue.bmp" });
+	}
+	else if (box_count >= 12 && box_count <= 16) {
+		this->image.LoadBitmapByString({ "resources/box-purple.bmp" });
+	}
+	else if (box_count >= 8 && box_count <= 12) {
+		this->image.LoadBitmapByString({ "resources/box-red.bmp" });
+	}
+	else if (box_count >= 4 && box_count <= 8) {
+		this->image.LoadBitmapByString({ "resources/box-orange.bmp" });
+	}
+	else if (box_count >= 1 && box_count <= 4) {
+		this->image.LoadBitmapByString({ "resources/box-yellow.bmp" });
+	}
+	image.SetTopLeft(x, y);
+
 }
