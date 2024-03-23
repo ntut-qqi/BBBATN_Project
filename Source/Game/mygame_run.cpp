@@ -6,6 +6,7 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
+#include <string>
 
 using namespace game_framework;
 
@@ -67,7 +68,7 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	//GotoGameState(GAME_STATE_OVER);
+	GotoGameState(GAME_STATE_OVER);
 
 }
 
@@ -84,11 +85,16 @@ void CGameStateRun::OnShow()
 		box_list[i].ShowBitmap();
 	};
 	checkCanvasCollision();
+	question.ShowBitmap();
+	show_text_score();
 }
 
 void CGameStateRun::load_background() {
 	background.LoadBitmapByString({ "resources/game_background.bmp" });
 	background.SetTopLeft(0, 0);
+
+	question.LoadBitmapByString({ "resources/question.bmp" });
+	question.SetTopLeft(0, 80);
 
 	frame.LoadBitmapByString({ "resources/frame.bmp" });
 	frame.SetTopLeft(42, 160);
@@ -111,4 +117,13 @@ void CGameStateRun::checkCanvasCollision() {
 	}
 	ball[0].SetTopLeft(ball[0].GetLeft() + dx, ball[0].GetTop() + dy);
 	ball[0].ShowBitmap();
+}
+
+void CGameStateRun::show_text_score() {
+	CDC *pDC = CDDraw::GetBackCDC();
+	string phase_string = to_string(phase);
+	CTextDraw::ChangeFontLog(pDC, 45, "SquareFont", RGB(255, 255, 255), 500);
+	CTextDraw::Print(pDC, 62, 376, phase_string);
+	
+	CDDraw::ReleaseBackCDC();
 }

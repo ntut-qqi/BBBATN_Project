@@ -129,7 +129,7 @@ namespace game_framework {
 
 	class CGameState {
 	public:
-		int phase = 6;			//關卡
+		int phase = 1;			//關卡
 		bool sub_phase = 1;		//是否過關  0=沒過  1=過
 		CGameState(CGame *g);
 		void OnDraw();			// Template Method

@@ -110,7 +110,6 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		
 		CMovingBitmap background;
 		CMovingBitmap frame;
 		CMovingBitmap box;
@@ -119,6 +118,10 @@ namespace game_framework {
 		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
+		void show_text_score();
+
+		int current_score;
+
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
