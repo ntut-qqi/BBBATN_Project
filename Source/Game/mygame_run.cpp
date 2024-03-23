@@ -6,11 +6,12 @@
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
 #include "mygame.h"
+#include <string>
 
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
-// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸°õ¦æª«¥ó¡A¥D­nªº¹CÀ¸µ{¦¡³£¦b³o¸Ì
+// é€™å€‹classç‚ºéŠæˆ²çš„éŠæˆ²åŸ·è¡Œç‰©ä»¶ï¼Œä¸»è¦çš„éŠæˆ²ç¨‹å¼éƒ½åœ¨é€™è£¡
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
@@ -21,16 +22,16 @@ CGameStateRun::~CGameStateRun()
 {
 }
 
-void CGameStateRun::OnBeginState()						// ³]©w¨C¦¸­«ª±©Ò»İªºÅÜ¼Æ
+void CGameStateRun::OnBeginState()						// è¨­å®šæ¯æ¬¡é‡ç©æ‰€éœ€çš„è®Šæ•¸
 {
 }
 
-void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
+void CGameStateRun::OnMove()							// ç§»å‹•éŠæˆ²å…ƒç´ 
 {
 
 }
 
-void CGameStateRun::OnInit()  								// ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
+void CGameStateRun::OnInit()  								// éŠæˆ²çš„åˆå€¼åŠåœ–å½¢è¨­å®š
 {
 	load_background();
 	
@@ -54,27 +55,27 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
 }
 
-void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // è™•ç†æ»‘é¼ çš„å‹•ä½œ
 {
 	GotoGameState(GAME_STATE_OVER);
 
 }
 
-void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// è™•ç†æ»‘é¼ çš„å‹•ä½œ
 {
 }
 
-void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// è™•ç†æ»‘é¼ çš„å‹•ä½œ
 {
 }
 
-void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // è™•ç†æ»‘é¼ çš„å‹•ä½œ
 {
 	GotoGameState(GAME_STATE_OVER);
 
 }
 
-void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// ³B²z·Æ¹«ªº°Ê§@
+void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// è™•ç†æ»‘é¼ çš„å‹•ä½œ
 {
 }
 
@@ -86,13 +87,21 @@ void CGameStateRun::OnShow()
 
 
 	checkCanvasCollision();
+
+	question.ShowBitmap();
+	show_text_score();
+
 	
 	box.ShowImage();
+
 }
 
 void CGameStateRun::load_background() {
 	background.LoadBitmapByString({ "resources/game_background.bmp" });
 	background.SetTopLeft(0, 0);
+
+	question.LoadBitmapByString({ "resources/question.bmp" });
+	question.SetTopLeft(0, 80);
 
 	frame.LoadBitmapByString({ "resources/frame.bmp" });
 	frame.SetTopLeft(42, 160);
@@ -100,7 +109,7 @@ void CGameStateRun::load_background() {
 
 	}
 
-void CGameStateRun::checkCanvasCollision() {								//¥~®Ø¸I¼²
+void CGameStateRun::checkCanvasCollision() {								//å¤–æ¡†ç¢°æ’
 	
 	//ball[0].UnshowBitmap();
 	if (ball[0].GetLeft() <= 54 || ball[0].GetLeft() >= 400) {
@@ -114,6 +123,15 @@ void CGameStateRun::checkCanvasCollision() {								//¥~®Ø¸I¼²
 	ball[0].ShowBitmap();
 }
 
+
+void CGameStateRun::show_text_score() {
+	CDC *pDC = CDDraw::GetBackCDC();
+	string phase_string = to_string(phase);
+	CTextDraw::ChangeFontLog(pDC, 45, "SquareFont", RGB(255, 255, 255), 500);
+	CTextDraw::Print(pDC, 62, 376, phase_string);
+	
+	CDDraw::ReleaseBackCDC();
+}
 
 Box::Box(int box_count ,int x,int y){
 	this->box_count = box_count;
