@@ -68,7 +68,7 @@ void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
-	GotoGameState(GAME_STATE_OVER);
+	//GotoGameState(GAME_STATE_OVER);
 
 }
 
