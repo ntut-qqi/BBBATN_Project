@@ -93,6 +93,8 @@ void CGameStateRun::OnShow()
 
 	
 	box.ShowImage();
+	box.ShowText();
+
 
 }
 
@@ -145,20 +147,47 @@ void Box::ShowImage(){
 
 void Box::Init() {
 	if (box_count >= 16 && box_count <= 20) {
-		this->image.LoadBitmapByString({ "resources/box-blue.bmp" });
+		this->image.LoadBitmapByString({ "resources/box-blue.bmp" }, RGB(0, 0, 0));
 	}
 	else if (box_count >= 12 && box_count <= 16) {
-		this->image.LoadBitmapByString({ "resources/box-purple.bmp" });
+		this->image.LoadBitmapByString({ "resources/box-purple.bmp" }, RGB(0, 0, 0));
 	}
 	else if (box_count >= 8 && box_count <= 12) {
-		this->image.LoadBitmapByString({ "resources/box-red.bmp" });
+		this->image.LoadBitmapByString({ "resources/box-red.bmp" }, RGB(0, 0, 0));
 	}
 	else if (box_count >= 4 && box_count <= 8) {
-		this->image.LoadBitmapByString({ "resources/box-orange.bmp" });
+		this->image.LoadBitmapByString({ "resources/box-orange.bmp" }, RGB(0, 0, 0));
 	}
 	else if (box_count >= 1 && box_count <= 4) {
-		this->image.LoadBitmapByString({ "resources/box-yellow.bmp" });
+		this->image.LoadBitmapByString({ "resources/box-yellow.bmp" }, RGB(0, 0, 0));
 	}
 	image.SetTopLeft(x, y);
 
+}
+
+void Box::ShowText() {
+	CDC *pDC = CDDraw::GetBackCDC();
+	if (box_count == 1) {
+		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, image.GetLeft() + 22, image.GetTop() + 14, to_string(box_count));
+	}
+	else if(box_count >= 2 && box_count <= 9){
+		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, image.GetLeft() + 18, image.GetTop() + 14, to_string(box_count));
+	}
+	else if (box_count ==11) {
+		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, image.GetLeft() + 15, image.GetTop() + 14, "1 1");
+	}
+	else if (box_count == 10 || (box_count>=12&&box_count<=19)){
+		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, image.GetLeft() + 15, image.GetTop() + 14, to_string(box_count));
+	}
+	else if (box_count == 20) {
+		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, image.GetLeft() + 11, image.GetTop() + 14, to_string(box_count));
+	}
+
+
+	CDDraw::ReleaseBackCDC();
 }

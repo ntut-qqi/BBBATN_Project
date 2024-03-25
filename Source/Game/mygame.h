@@ -117,14 +117,13 @@ namespace game_framework {
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
 		int dx=1;
 		int dy = 1;
-
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap background;
 		CMovingBitmap frame;
-		Box box = Box(10, 100, 150);
+		Box box = Box(1, 47, 165);
 
 		CMovingBitmap ball[3];
 		CMovingBitmap question;
