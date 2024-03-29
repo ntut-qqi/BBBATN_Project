@@ -19,7 +19,6 @@ CGameStateOver::CGameStateOver(CGame *g): CGameState(g)
 
 void CGameStateOver::OnMove()
 {
-	GotoGameState(GAME_STATE_INIT);
 }
 
 void CGameStateOver::OnBeginState()
@@ -98,7 +97,6 @@ void CGameStateOver::show_text() {
 
 void CGameStateOver::load_background()
 {
-
 		background.LoadBitmap({ "resources/lose_background.bmp","resources/win_background.bmp", "resources/pass_background.bmp" });
 		background.SetTopLeft(0, 0);
 }
