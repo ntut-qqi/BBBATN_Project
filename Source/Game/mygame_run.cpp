@@ -172,29 +172,22 @@ void CGameStateRun::checkBoxBallCollision() {
 	for (int i = 0; i < ball_count; i++) {
 		for (int j = 0; j < box_count; j++) {
 			IsOverlap_Direction(ball[i], box[j]);
-
+			//show_text_score();
 			if (CMovingBitmap::IsOverlap(box[j].image, ball[i].ball_image))
 			{
 				//show_text_score();
-
-				//if (ball[i].GetTop() >= (box[j].GetTop() - ball->ballWidth)) {
-				//	ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, min(ball[i].GetTop() + ball[i].dy, (box[j].GetTop() - ball->ballWidth)));
-				//}
 				if (ball[i].xDirectionChange_flag == 1)
 				{
 					ball[i].dx *= -1;
 					ball[i].xDirectionChange_flag = 0;
-					show_text_score();
+					//show_text_score();
 
 				}
-				else if (ball[i].yDirectionChange_flag == 1)
+				if (ball[i].yDirectionChange_flag == 1)
 				{
-					//if (ball[i].GetTop() >= (box[j].GetTop() - ball->ballWidth)) {
-					//	ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, min(ball[i].GetTop() + ball[i].dy, (box[j].GetTop() - ball->ballWidth)));
-					//}
 					ball[i].dy *= -1;
 					ball[i].yDirectionChange_flag = 0;
-					show_text_score();
+					//show_text_score();
 				}
 			}
 			//if (ball[i].GetTop() >= (box[j].GetTop() - ball->ballWidth)) {
@@ -209,24 +202,15 @@ void CGameStateRun::checkBoxBallCollision() {
 }
 
 void CGameStateRun::IsOverlap_Direction(Ball ball, Box box) {
-	if ((ball.GetLeft() >= box.GetLeft() - ball.ballWidth) && (ball.GetLeft() <= box.GetLeft()+box.boxWidth + ball.ballWidth)) {
-		show_text_score();
-
-		if ((ball.GetTop()) <= (box.GetTop() - ball.ballWidth)) {
-			ball.yDirectionChange_flag = 1;
+	if ((ball.GetLeft() >= box.GetLeft() - ball.ballWidth) && (ball.GetLeft() <= box.GetLeft()+box.boxWidth )) {
+		if ((ball.GetTop()) == (box.GetTop() - ball.ballWidth+1) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth )) {
+			//ball.yDirectionChange_flag = 1;
+			ball.SetyDirectionChange_flag(1);
 			question.ShowBitmap();
+			show_text_score();
+
 		}
 	}
-
-	//int ballRight = ball.GetLeft() + ball.ballWidth;
-	//int ballBottom = ball.GetTop() + ball.ballWidth;
-	//int boxRight = box.GetLeft() + box.boxWidth;
-	//int boxBottom = box.GetTop() + box.boxWidth;
-
-	//if (ballRight >= box.GetLeft() && ball.GetLeft() <= boxRight && ballBottom == box.GetTop()) {
-	//	ball.yDirectionChange_flag = 1;
-	//	question.ShowBitmap();
-	//}
 }
 //
 //void Box::IsOverlap_Direction(Ball ball)
@@ -253,7 +237,9 @@ void CGameStateRun::IsOverlap_Direction(Ball ball, Box box) {
 void CGameStateRun::show_text_score()
 {
 	CDC *pDC = CDDraw::GetBackCDC();
-	string phase_string = to_string(current_score);
+	//string phase_string = to_string(current_score);
+	string phase_string = to_string(ball[1].yDirectionChange_flag);
+
 	CTextDraw::ChangeFontLog(pDC, 45, "SquareFont", RGB(255, 255, 255), 500);
 	CTextDraw::Print(pDC, 400, 80, phase_string);
 
@@ -379,4 +365,7 @@ void Ball::RenewCoordinate(int set_x, int set_y)
 	y = set_y;
 	//return 0;
 }
-
+void Ball::SetyDirectionChange_flag(bool new_flag)
+{
+	yDirectionChange_flag = new_flag;
+}

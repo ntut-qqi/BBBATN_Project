@@ -95,6 +95,7 @@ namespace game_framework
 		void ShowBitmap();
 		void SetTopLeft(int set_x, int set_y);
 		void RenewCoordinate(int set_x, int set_y);
+		void SetyDirectionChange_flag(bool new_flag);
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
