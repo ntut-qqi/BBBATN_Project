@@ -65,10 +65,9 @@ namespace game_framework
 		int y;
 		int GetLeft();
 		int GetTop();
-		void IsOverlap_Direction(Ball ball);
-		bool xDirectionChange_flag = 0;
-		bool yDirectionChange_flag = 0;
-
+		//void IsOverlap_Direction(Ball ball);
+		
+		int boxWidth = 52;
 
 	};
 
@@ -88,6 +87,10 @@ namespace game_framework
 		
 		int GetLeft();
 		int GetTop();
+
+		bool xDirectionChange_flag = 0;
+		bool yDirectionChange_flag = 0;
+
 		void Init();
 		void ShowBitmap();
 		void SetTopLeft(int set_x, int set_y);
@@ -152,6 +155,8 @@ namespace game_framework
 		CMovingBitmap frame;
 
 		int box_count=2;
+		//Box box[1] = { Box(1, 250, 250) };
+
 		Box box[2] = { Box(1, 250, 250), Box(10, 47+50, 320) };
 		//Box box[2] = { Box(1, 47, 165), Box(10, 47 + 50, 165) };
 
@@ -161,16 +166,21 @@ namespace game_framework
 		int currentU_ball_y;
 		int currentD_ball_y;
 
-		int ball_count = 2;
-		Ball ball[2] = { Ball(240, 300), Ball(260, 350) };
-		
+		int ball_count = 1;
+		Ball ball[1] = { Ball(132, 545) };
+		//Ball ball[2] = { Ball(132, 545), Ball(200, 500) };
+
 		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
+		void IsOverlap_Direction(Ball ball,Box box);
+
+		
+
 
 		void show_text_score();
-
+		void showBallMove();
 	
 	};
 

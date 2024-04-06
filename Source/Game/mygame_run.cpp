@@ -92,9 +92,10 @@ void CGameStateRun::OnShow()
 
 	checkCanvasCollision();
 	checkBoxBallCollision();
+	//showBallMove();
 
-	question.ShowBitmap();
-	show_text_score();
+	//question.ShowBitmap();
+	//show_text_score();
 	for (int i = 0; i < box_count; i++) {
 		box[i].ShowImage();
 		box[i].ShowText();
@@ -151,34 +152,104 @@ void CGameStateRun::checkCanvasCollision()
 		{
 			ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
 		}
-		//ball[i].ShowBitmap();
-		//ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
+		ball[i].ShowBitmap();
+		ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
 	}
 	//}
 }
+//void CGameStateRun::showBallMove() {
+//	for (int i = 0; i < ball_count; i++) {
+//
+//		ball[i].ShowBitmap();
+//		ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
+//		box[i].yDirectionChange_flag = 0;
+//		box[i].xDirectionChange_flag = 0;
+//	}
+//}
+//
 
 void CGameStateRun::checkBoxBallCollision() {
 	for (int i = 0; i < ball_count; i++) {
 		for (int j = 0; j < box_count; j++) {
-			if (CMovingBitmap::IsOverlap(box[i].image, ball[i].ball_image))
+			IsOverlap_Direction(ball[i], box[j]);
+
+			if (CMovingBitmap::IsOverlap(box[j].image, ball[i].ball_image))
 			{
-				box[i].IsOverlap_Direction(ball[i]);
-				if (box[i].xDirectionChange_flag == 1)
+				//show_text_score();
+
+				//if (ball[i].GetTop() >= (box[j].GetTop() - ball->ballWidth)) {
+				//	ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, min(ball[i].GetTop() + ball[i].dy, (box[j].GetTop() - ball->ballWidth)));
+				//}
+				if (ball[i].xDirectionChange_flag == 1)
 				{
 					ball[i].dx *= -1;
+					ball[i].xDirectionChange_flag = 0;
+					show_text_score();
+
 				}
-				else if(box[i].yDirectionChange_flag == 1)
+				else if (ball[i].yDirectionChange_flag == 1)
 				{
+					//if (ball[i].GetTop() >= (box[j].GetTop() - ball->ballWidth)) {
+					//	ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, min(ball[i].GetTop() + ball[i].dy, (box[j].GetTop() - ball->ballWidth)));
+					//}
 					ball[i].dy *= -1;
+					ball[i].yDirectionChange_flag = 0;
+					show_text_score();
 				}
 			}
+			//if (ball[i].GetTop() >= (box[j].GetTop() - ball->ballWidth)) {
+			//	ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, min(ball[i].GetTop() + ball[i].dy, (box[j].GetTop() - ball->ballWidth)));
+			//}
 			ball[i].SetTopLeft(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
 			ball[i].ShowBitmap();
 			ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
+
 		}
 	}
 }
 
+void CGameStateRun::IsOverlap_Direction(Ball ball, Box box) {
+	if ((ball.GetLeft() >= box.GetLeft() - ball.ballWidth) && (ball.GetLeft() <= box.GetLeft()+box.boxWidth + ball.ballWidth)) {
+		show_text_score();
+
+		if ((ball.GetTop()) <= (box.GetTop() - ball.ballWidth)) {
+			ball.yDirectionChange_flag = 1;
+			question.ShowBitmap();
+		}
+	}
+
+	//int ballRight = ball.GetLeft() + ball.ballWidth;
+	//int ballBottom = ball.GetTop() + ball.ballWidth;
+	//int boxRight = box.GetLeft() + box.boxWidth;
+	//int boxBottom = box.GetTop() + box.boxWidth;
+
+	//if (ballRight >= box.GetLeft() && ball.GetLeft() <= boxRight && ballBottom == box.GetTop()) {
+	//	ball.yDirectionChange_flag = 1;
+	//	question.ShowBitmap();
+	//}
+}
+//
+//void Box::IsOverlap_Direction(Ball ball)
+//{
+//	//新增穿模判斷
+//	//&& ball.GetTop()>=y && ball.GetTop() <= (y+52)
+//	////&& CMovingBitmap::IsOverlap(image, ball.ball_image)
+//	//yDirectionChange_flag = 0;
+//	//xDirectionChange_flag = 0;
+//	//if (ball.GetTop() >= (y - ball.ballWidth) && ball.GetTop() <= (y + 52))
+//	//{
+//	//	yDirectionChange_flag = 1;
+//	//}
+//	//if (ball.GetLeft() >= (x - ball.ballWidth) && ball.GetLeft() <= (x + 52)) {
+//	//	xDirectionChange_flag = 1;
+//	//}
+//	//else if (ball.GetTop() >= (y - ball.ballWidth) && ball.GetTop() <= (y + 52))
+//	//{
+//	//	xDirectionChange_flag = 1;
+//	//}
+//
+//	
+//}
 void CGameStateRun::show_text_score()
 {
 	CDC *pDC = CDDraw::GetBackCDC();
@@ -267,20 +338,7 @@ int Box::GetTop()
 	return image.GetTop();
 }
 
-void Box::IsOverlap_Direction(Ball ball)
-{
-	//新增穿模判斷
-	//&& ball.GetTop()>=y && ball.GetTop() <= (y+52)
-	//新增img width
-	//flag寫在哪
-	if (ball.GetLeft()>=x && ball.GetLeft()<=(x+53) && CMovingBitmap::IsOverlap(image, ball.ball_image)) {
-		yDirectionChange_flag = 1;
-	}
-	else if (ball.GetTop() >= y && ball.GetTop() <= (y + 53)&& CMovingBitmap::IsOverlap(image, ball.ball_image))
-	{
-		xDirectionChange_flag = 1;
-	}
-}
+
 
 Ball::Ball(int x, int y) {
 	this->x = x;
