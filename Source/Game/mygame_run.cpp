@@ -67,9 +67,11 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // 處理滑鼠的動作
 {
 	click_flag = 1;
-	ball->mouse_x = point.x;
-	ball->mouse_y = point.y;
-	ball->Ball_shot(ball->x, ball->y, ball->mouse_x, ball->mouse_y);
+	for (int i = 0; i < 2; i++) {
+		ball[i].mouse_x = point.x;
+		ball[i].mouse_y = point.y;
+		ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
+	}
 
 }
 
@@ -153,7 +155,7 @@ void CGameStateRun::checkCanvasCollision()
 			//會跑這個
 			else
 			{
-				ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx), int(ball[i].GetTop() + ball[i].dy));
+				ball[i].SetTopLeft(int(ball[i].x), int(ball[i].y));
 			}
 			//ball[i].ShowBitmap();
 			//ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
@@ -178,9 +180,11 @@ void CGameStateRun::checkBoxBallCollision() {
 						ball[i].dy *= -1;
 					}
 				}
-				ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx), int(ball[i].GetTop() + ball[i].dy));
+				ball[i].x += ball[i].dx;
+				ball[i].y += ball[i].dy;
+				ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
 				ball[i].ShowBitmap();
-				ball[i].RenewCoordinate(int(ball[i].GetLeft() + ball[i].dx), int(ball[i].GetTop() + ball[i].dy));
+				//ball[i].RenewCoordinate((int)(ball[i].x), (int)(ball[i].y));
 			}
 		}
 	}
@@ -281,12 +285,18 @@ void Box::IsOverlap_Direction(Ball ball)
 	//&& ball.GetTop()>=y && ball.GetTop() <= (y+52)
 	//新增img width
 	//flag寫在哪
-	if (ball.GetLeft()>=x && ball.GetLeft()<=(x+53) && CMovingBitmap::IsOverlap(image, ball.ball_image)) {
+	int ballLeft = ball.GetLeft();
+	int ballRight = ball.GetLeft() + ball.ball_image.GetWidth();
+	int ballTop = ball.GetTop();
+	int ballButtom = ball.GetTop() + ball.ball_image.GetHeight();
+	if ((ballRight >= x || ballLeft <= (x + image.GetWidth())) && CMovingBitmap::IsOverlap(image, ball.ball_image)) {
 		yDirectionChange_flag = 1;
+		xDirectionChange_flag = 0;
 	}
-	else if (ball.GetTop() >= y && ball.GetTop() <= (y + 53)&& CMovingBitmap::IsOverlap(image, ball.ball_image))
+	else if ((ballButtom >= y || ballTop <= (y + image.GetHeight())) && CMovingBitmap::IsOverlap(image, ball.ball_image))
 	{
 		xDirectionChange_flag = 1;
+		yDirectionChange_flag = 0;
 	}
 }
 
@@ -304,7 +314,7 @@ void Ball::Init()
 {
 
 	this->ball_image.LoadBitmapByString({ "resources/ball.bmp" }, RGB(255, 255, 255));
-	ball_image.SetTopLeft(223, 560);
+	ball_image.SetTopLeft((int) x, (int) y);
 }
 
 
@@ -330,9 +340,8 @@ void Ball::RenewCoordinate(int set_x, int set_y)
 	//return 0;
 }
 
-double Ball::Ball_shot(int x, int y, int mouse_x, int mouse_y) {
+void Ball::Ball_shot(double x, double y, int mouse_x, int mouse_y) {
 	//pow(pow((mouse_x - x),2)+ pow((mouse_y - y), 2),0.5)
 	dx = (mouse_x - x) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5);
 	dy = (mouse_y - y) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5);
-	return dx, dy;
 }

@@ -78,8 +78,8 @@ namespace game_framework
 		Ball(int x, int y);
 		CMovingBitmap ball_image;
 		
-		int x;	//®y¼Ð
-		int y;
+		double x;	//®y¼Ð
+		double y;
 
 		double dx=1;
 		double dy=1;
@@ -95,7 +95,7 @@ namespace game_framework
 		void ShowBitmap();
 		void SetTopLeft(int set_x, int set_y);
 		void RenewCoordinate(int set_x, int set_y);
-		double Ball_shot(int x, int y, int mouse_x, int mouse_y);
+		void Ball_shot(double x, double y, int mouse_x, int mouse_y);
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -167,7 +167,7 @@ namespace game_framework
 		int currentD_ball_y;
 
 		int ball_count = 2;
-		Ball ball[2] = { Ball(240, 300), Ball(260, 350) };
+		Ball ball[2] = { Ball(223, 540), Ball(203, 520) };
 		
 		CMovingBitmap question;
 		void load_background();
