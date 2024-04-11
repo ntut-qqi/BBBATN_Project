@@ -61,6 +61,8 @@ namespace game_framework
 		void Init();
 		void ShowImage();
 		void ShowText();
+		void UnshowBitmap();
+
 		int x;
 		int y;
 		int GetLeft();
@@ -95,6 +97,7 @@ namespace game_framework
 		void ShowBitmap();
 		void SetTopLeft(int set_x, int set_y);
 		void RenewCoordinate(int set_x, int set_y);
+		void SetxDirectionChange_flag(bool new_flag);
 		void SetyDirectionChange_flag(bool new_flag);
 	};
 
@@ -167,15 +170,15 @@ namespace game_framework
 		int currentU_ball_y;
 		int currentD_ball_y;
 
-		int ball_count = 1;
-		Ball ball[1] = { Ball(132, 545) };
-		//Ball ball[2] = { Ball(132, 545), Ball(200, 500) };
+		int ball_count = 2;
+		//Ball ball[1] = { Ball(132, 545) };
+		Ball ball[2] = { Ball(57, 350), Ball(200, 500) };
 
 		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
-		void IsOverlap_Direction(Ball ball,Box box);
+		void IsOverlap_Direction(Ball &ball,Box box);
 
 		
 
