@@ -82,8 +82,8 @@ namespace game_framework
 		double x;	//�y��
 		double y;
 
-		double dx=1;
-		double dy=1;
+		double dx=0;
+		double dy=0;
 
 		int mouse_x;	//�y��
 		int mouse_y;
