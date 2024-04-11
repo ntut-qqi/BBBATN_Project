@@ -81,8 +81,11 @@ namespace game_framework
 		int x;	//座標
 		int y;
 
-		int dx=1;
-		int dy=1;
+		double dx=1;
+		double dy=1;
+
+		int mouse_x;	//座標
+		int mouse_y;
 
 		int ballWidth = 18;
 		
@@ -92,6 +95,7 @@ namespace game_framework
 		void ShowBitmap();
 		void SetTopLeft(int set_x, int set_y);
 		void RenewCoordinate(int set_x, int set_y);
+		double Ball_shot(int x, int y, int mouse_x, int mouse_y);
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -143,6 +147,7 @@ namespace game_framework
 		void OnRButtonDown(UINT nFlags, CPoint point); // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);   // 處理滑鼠的動作
 	
+		bool click_flag = 0;
 
 	protected:
 		void OnMove(); // 移動遊戲元素
