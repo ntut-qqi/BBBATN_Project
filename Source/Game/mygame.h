@@ -1,5 +1,5 @@
 /*
- * mygame.h: ¥»ÀÉ®×Àx¹CÀ¸¥»¨­ªºclassªºinterface
+ * mygame.h: ï¿½ï¿½ï¿½É®ï¿½ï¿½xï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½classï¿½ï¿½interface
  * Copyright (C) 2002-2008 Woei-Kae Chen <wkc@csie.ntut.edu.tw>
  *
  * This file is part of game, a free game development framework for windows.
@@ -45,7 +45,7 @@ namespace game_framework
 	/////////////////////////////////////////////////////////////////////////////
 
 	enum AUDIO_ID
-	{				// ©w¸q¦UºØ­µ®Äªº½s¸¹
+	{				// ï¿½wï¿½qï¿½Uï¿½Ø­ï¿½ï¿½Äªï¿½ï¿½sï¿½ï¿½
 		AUDIO_DING, // 0
 		AUDIO_LAKE, // 1
 		AUDIO_NTUT	// 2
@@ -61,14 +61,15 @@ namespace game_framework
 		void Init();
 		void ShowImage();
 		void ShowText();
+		void UnshowBitmap();
+
 		int x;
 		int y;
 		int GetLeft();
 		int GetTop();
-		void IsOverlap_Direction(Ball ball);
-		bool xDirectionChange_flag = 0;
-		bool yDirectionChange_flag = 0;
-
+		//void IsOverlap_Direction(Ball ball);
+		
+		int boxWidth = 52;
 
 	};
 
@@ -78,46 +79,52 @@ namespace game_framework
 		Ball(int x, int y);
 		CMovingBitmap ball_image;
 		
-		double x;	//®y¼Ð
+		double x;	//ï¿½yï¿½ï¿½
 		double y;
 
 		double dx=1;
 		double dy=1;
 
-		int mouse_x;	//®y¼Ð
+		int mouse_x;	//ï¿½yï¿½ï¿½
 		int mouse_y;
 
 		int ballWidth = 18;
 		
 		int GetLeft();
 		int GetTop();
+
+		bool xDirectionChange_flag = 0;
+		bool yDirectionChange_flag = 0;
+
 		void Init();
 		void ShowBitmap();
 		void SetTopLeft(int set_x, int set_y);
 		void RenewCoordinate(int set_x, int set_y);
 		void Ball_shot(double x, double y, int mouse_x, int mouse_y);
+		void SetxDirectionChange_flag(bool new_flag);
+		void SetyDirectionChange_flag(bool new_flag);
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸¶}ÀYµe­±ª«¥ó
-	// ¨C­ÓMember functionªºImplementation³£­n§ËÀ´
+	// ï¿½oï¿½ï¿½classï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½}ï¿½Yï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½Cï¿½ï¿½Member functionï¿½ï¿½Implementationï¿½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½
 	/////////////////////////////////////////////////////////////////////////////
 
 	class CGameStateInit : public CGameState
 	{
 	public:
 		CGameStateInit(CGame *g);
-		void OnInit();								   // ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
-		void OnBeginState();						   // ³]©w¨C¦¸­«ª±©Ò»ÝªºÅÜ¼Æ
-		void OnKeyUp(UINT, UINT, UINT);				   // ³B²zÁä½LUpªº°Ê§@
-		void OnLButtonDown(UINT nFlags, CPoint point); // ³B²z·Æ¹«ªº°Ê§@
+		void OnInit();								   // ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤Î¹Ï§Î³]ï¿½w
+		void OnBeginState();						   // ï¿½]ï¿½wï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ýªï¿½ï¿½Ü¼ï¿½
+		void OnKeyUp(UINT, UINT, UINT);				   // ï¿½Bï¿½zï¿½ï¿½LUpï¿½ï¿½ï¿½Ê§@
+		void OnLButtonDown(UINT nFlags, CPoint point); // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 
 	protected:
-		void OnShow(); // Åã¥Ü³o­Óª¬ºAªº¹CÀ¸µe­±
+		void OnShow(); // ï¿½ï¿½Ü³oï¿½Óªï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½eï¿½ï¿½
 	private:
 		void load_background();
 
-		CMovingBitmap logo; // csieªºlogo
+		CMovingBitmap logo; // csieï¿½ï¿½logo
 		CMovingBitmap background;
 		CMovingBitmap character;
 		CMovingBitmap ball;
@@ -128,8 +135,8 @@ namespace game_framework
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸°õ¦æª«¥ó¡A¥D­nªº¹CÀ¸µ{¦¡³£¦b³o¸Ì
-	// ¨C­ÓMember functionªºImplementation³£­n§ËÀ´
+	// ï¿½oï¿½ï¿½classï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½æª«ï¿½ï¿½Aï¿½Dï¿½nï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½oï¿½ï¿½
+	// ï¿½Cï¿½ï¿½Member functionï¿½ï¿½Implementationï¿½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½
 	/////////////////////////////////////////////////////////////////////////////
 
 	class CGameStateRun : public CGameState
@@ -137,26 +144,28 @@ namespace game_framework
 	public:
 		CGameStateRun(CGame *g);
 		~CGameStateRun();
-		void OnBeginState(); // ³]©w¨C¦¸­«ª±©Ò»ÝªºÅÜ¼Æ
-		void OnInit();		 // ¹CÀ¸ªºªì­È¤Î¹Ï§Î³]©w
+		void OnBeginState(); // ï¿½]ï¿½wï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ýªï¿½ï¿½Ü¼ï¿½
+		void OnInit();		 // ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤Î¹Ï§Î³]ï¿½w
 		void OnKeyDown(UINT, UINT, UINT);
 		void OnKeyUp(UINT, UINT, UINT);
-		void OnLButtonDown(UINT nFlags, CPoint point); // ³B²z·Æ¹«ªº°Ê§@
-		void OnLButtonUp(UINT nFlags, CPoint point);   // ³B²z·Æ¹«ªº°Ê§@
-		void OnMouseMove(UINT nFlags, CPoint point);   // ³B²z·Æ¹«ªº°Ê§@
-		void OnRButtonDown(UINT nFlags, CPoint point); // ³B²z·Æ¹«ªº°Ê§@
-		void OnRButtonUp(UINT nFlags, CPoint point);   // ³B²z·Æ¹«ªº°Ê§@
+		void OnLButtonDown(UINT nFlags, CPoint point); // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
+		void OnLButtonUp(UINT nFlags, CPoint point);   // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
+		void OnMouseMove(UINT nFlags, CPoint point);   // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
+		void OnRButtonDown(UINT nFlags, CPoint point); // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
+		void OnRButtonUp(UINT nFlags, CPoint point);   // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 	
 		bool click_flag = 0;
 
 	protected:
-		void OnMove(); // ²¾°Ê¹CÀ¸¤¸¯À
-		void OnShow(); // Åã¥Ü³o­Óª¬ºAªº¹CÀ¸µe­±
+		void OnMove(); // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		void OnShow(); // ï¿½ï¿½Ü³oï¿½Óªï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½eï¿½ï¿½
 	private:
 		CMovingBitmap background;
 		CMovingBitmap frame;
 
 		int box_count=2;
+		//Box box[1] = { Box(1, 250, 250) };
+
 		Box box[2] = { Box(1, 250, 250), Box(10, 47+50, 320) };
 		//Box box[2] = { Box(1, 47, 165), Box(10, 47 + 50, 165) };
 
@@ -173,31 +182,35 @@ namespace game_framework
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
+		void IsOverlap_Direction(Ball &ball,Box box);
+
+		
+
 
 		void show_text_score();
-
+		void showBallMove();
 	
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	// ³o­Óclass¬°¹CÀ¸ªºµ²§ôª¬ºA(Game Over)
-	// ¨C­ÓMember functionªºImplementation³£­n§ËÀ´
+	// ï¿½oï¿½ï¿½classï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A(Game Over)
+	// ï¿½Cï¿½ï¿½Member functionï¿½ï¿½Implementationï¿½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½
 	/////////////////////////////////////////////////////////////////////////////
 
 	class CGameStateOver : public CGameState
 	{
 	public:
 		CGameStateOver(CGame *g);
-		void OnLButtonDown(UINT nFlags, CPoint point); // ³B²z·Æ¹«ªº°Ê§@
-		void OnBeginState();						   // ³]©w¨C¦¸­«ª±©Ò»ÝªºÅÜ¼Æ
+		void OnLButtonDown(UINT nFlags, CPoint point); // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
+		void OnBeginState();						   // ï¿½]ï¿½wï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ýªï¿½ï¿½Ü¼ï¿½
 		void OnInit();
 
 	protected:
-		void OnMove(); // ²¾°Ê¹CÀ¸¤¸¯À
-		void OnShow(); // Åã¥Ü³o­Óª¬ºAªº¹CÀ¸µe­±
+		void OnMove(); // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		void OnShow(); // ï¿½ï¿½Ü³oï¿½Óªï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½eï¿½ï¿½
 	private:
 		CMovingBitmap background;
-		int counter; // ­Ë¼Æ¤§­p¼Æ¾¹
+		int counter; // ï¿½Ë¼Æ¤ï¿½ï¿½pï¿½Æ¾ï¿½
 		void show_text();
 		void load_background();
 	};
