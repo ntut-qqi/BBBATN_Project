@@ -165,11 +165,11 @@ namespace game_framework
 		CMovingBitmap background;
 		CMovingBitmap frame;
 
-		int box_amount = 8;
+		int box_count=2;
+		//Box box[1] = { Box(1, 250, 250) };
 
-		//Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164),Box(1, 47 + 52 * 2, 164), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47+ 52 * 5, 164),Box(1, 47+52 * 6, 164) };
-		Box box[8] = { Box(1, 47 + 52 * 6, 164 + 52 * 7),Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5),Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164),Box(1, 47 + 52 * 5, 164 + 52) };
-
+		Box box[2] = { Box(1, 250, 250), Box(10, 47+50, 320) };
+		//Box box[2] = { Box(1, 47, 165), Box(10, 47 + 50, 165) };
 
 
 		int currentL_ball_x;

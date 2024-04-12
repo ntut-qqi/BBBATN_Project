@@ -29,7 +29,7 @@ void CGameStateRun::OnBeginState() // �]�w�C�������һݪ��
 
 void CGameStateRun::OnMove() // ���ʹC������
 {
-	for (int i = 0; i < box_amount; i++) {
+	for (int i = 0; i < box_count; i++) {
 		for (int j = 0; j < ball_count; j++) {
 			if (CMovingBitmap::IsOverlap(box[i].image, ball[j].ball_image)) {
 				overlap_flag = 1;
@@ -44,7 +44,7 @@ void CGameStateRun::OnInit() // �C������Ȥιϧγ]�w
 {
 	load_background();
 
-	for (int i = 0; i < box_amount; i++) {
+	for (int i = 0; i < box_count; i++) {
 		box[i].Init();
 	}
 	
@@ -106,7 +106,7 @@ void CGameStateRun::OnShow()
 
 	//question.ShowBitmap();
 	//show_text_score();
-	for (int i = 0; i < box_amount; i++) {
+	for (int i = 0; i < box_count; i++) {
 		if (box[i].box_count <= 0) {
 			continue;
 		}
@@ -191,7 +191,7 @@ void CGameStateRun::checkCanvasCollision()
 void CGameStateRun::checkBoxBallCollision() {
 	
 	for (int i = 0; i < ball_count; i++) {
-		for (int j = 0; j < box_amount; j++) {
+		for (int j = 0; j < box_count; j++) {
 			if (ball[i].click_flag == 1) {
 				if (box[j].box_count > 0) {
 					
