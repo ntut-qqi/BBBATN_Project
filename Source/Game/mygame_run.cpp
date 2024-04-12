@@ -176,7 +176,7 @@ void CGameStateRun::checkBoxBallCollision()
 
 	for (int i = 0; i < ball_count; i++)
 	{
-		for (int j = 0; j < box_count; j++)
+		for (int j = 0; j < box_amount; j++)
 		{
 			if (ball[i].click_flag == 1)
 			{
