@@ -36,6 +36,8 @@ void CGameStateRun::OnMove() // ���ʹC������
 			}
 		}
 	}
+	checkCanvasCollision();
+	checkBoxBallCollision();
 }
 
 void CGameStateRun::OnInit() // �C������Ȥιϧγ]�w
@@ -61,11 +63,12 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // �B�z�ƹ����ʧ@
 {
-	click_flag = 1;
+	
 	for (int i = 0; i < 2; i++) {
 		ball[i].mouse_x = point.x;
 		ball[i].mouse_y = point.y;
 		ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
+		ball[i].click_flag = 1;
 	}
 
 }
@@ -90,8 +93,7 @@ void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
 	frame.ShowBitmap();
-	checkCanvasCollision();
-	checkBoxBallCollision();
+	
 
 	//for (int i = 0; i < box_count; i++) {
 	//	if (box[i].box_count <= 0) {
@@ -130,16 +132,23 @@ void CGameStateRun::load_background()
 
 void CGameStateRun::checkCanvasCollision()
 { 
-	if (click_flag == 1) {
-		for (int i = 0; i < ball_count; i++) {
-
+	
+	for (int i = 0; i < ball_count; i++) {
+		if (ball[i].click_flag == 1) {
 			if (ball[i].GetLeft() <= 45 || ball[i].GetLeft() >= 395)
 			{
 				ball[i].dx *= -1;
 			}
-			if (ball[i].GetTop() <= 164 || ball[i].GetTop() >= 564)
+			if (ball[i].GetTop() <= 164)
 			{
 				ball[i].dy *= -1;
+			}
+			if (ball[i].GetTop() >= 564)
+			{
+				ball[i].x = ball[i].GetLeft();
+
+				ball[i].click_flag = 0;
+
 			}
 			//max min
 			if (ball[i].GetLeft() + ball[i].dx <= 45) {
@@ -180,9 +189,10 @@ void CGameStateRun::checkCanvasCollision()
 //
 
 void CGameStateRun::checkBoxBallCollision() {
-	if (click_flag == 1) {
-		for (int i = 0; i < ball_count; i++) {
-			for (int j = 0; j < box_count; j++) {
+	
+	for (int i = 0; i < ball_count; i++) {
+		for (int j = 0; j < box_count; j++) {
+			if (ball[i].click_flag == 1) {
 				if (box[j].box_count > 0) {
 					
 					IsOverlap_Direction(ball[i], box[j]);
