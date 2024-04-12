@@ -132,7 +132,7 @@ namespace game_framework {
 		int phase = 6;			//關卡
 		bool sub_phase = 1;		//是否過關  0=沒過  1=過
 	    int current_score = 6;
-		bool overlap_flag=0;
+		
 
 		CGameState(CGame *g);
 		void OnDraw();			// Template Method
