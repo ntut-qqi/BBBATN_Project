@@ -103,6 +103,8 @@ namespace game_framework
 		void Ball_shot(double x, double y, int mouse_x, int mouse_y);
 		void SetxDirectionChange_flag(bool new_flag);
 		void SetyDirectionChange_flag(bool new_flag);
+
+		bool click_flag = 0;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -154,7 +156,7 @@ namespace game_framework
 		void OnRButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
 		void OnRButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
 	
-		bool click_flag = 0;
+		
 
 	protected:
 		void OnMove(); // ���ʹC������
