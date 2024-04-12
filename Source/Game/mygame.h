@@ -67,10 +67,8 @@ namespace game_framework
 		int y;
 		int GetLeft();
 		int GetTop();
-		//void IsOverlap_Direction(Ball ball);
-		
+		// void IsOverlap_Direction(Ball ball);
 		int boxWidth = 52;
-
 	};
 
 	class Ball
@@ -78,18 +76,18 @@ namespace game_framework
 	public:
 		Ball(int x, int y);
 		CMovingBitmap ball_image;
-		
-		double x;	//�y��
+
+		double x; // �y��
 		double y;
 
-		double dx=0;
-		double dy=0;
+		double dx = 0;
+		double dy = 0;
 
-		int mouse_x;	//�y��
+		int mouse_x; // �y��
 		int mouse_y;
 
 		int ballWidth = 18;
-		
+
 		int GetLeft();
 		int GetTop();
 
@@ -155,8 +153,8 @@ namespace game_framework
 		void OnMouseMove(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
 		void OnRButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
 		void OnRButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-	
-		
+
+		bool click_flag = 0;
 
 	protected:
 		void OnMove(); // ���ʹC������
@@ -167,10 +165,8 @@ namespace game_framework
 
 		int box_amount = 8;
 
-		//Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164),Box(1, 47 + 52 * 2, 164), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47+ 52 * 5, 164),Box(1, 47+52 * 6, 164) };
-		Box box[8] = { Box(1, 47 + 52 * 6, 164 + 52 * 7),Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5),Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164),Box(1, 47 + 52 * 5, 164 + 52) };
-
-
+		// Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164),Box(1, 47 + 52 * 2, 164), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47+ 52 * 5, 164),Box(1, 47+52 * 6, 164) };
+		Box box[8] = {Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52)};
 
 		int currentL_ball_x;
 		int currentR_ball_x;
@@ -178,20 +174,16 @@ namespace game_framework
 		int currentD_ball_y;
 
 		int ball_count = 2;
-		Ball ball[2] = { Ball(223, 540), Ball(203, 520) };
-		
+		Ball ball[2] = {Ball(223, 540), Ball(203, 520)};
+
 		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
-		void IsOverlap_Direction(Ball &ball,Box box);
-
-		
-
+		void IsOverlap_Direction(Ball &ball, Box box);
 
 		void show_text_score();
 		void showBallMove();
-	
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

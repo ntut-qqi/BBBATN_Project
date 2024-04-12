@@ -28,17 +28,6 @@ void CGameStateRun::OnBeginState() // �]�w�C�������һݪ��
 
 void CGameStateRun::OnMove() // ���ʹC������
 {
-<<<<<<< HEAD
-	for (int i = 0; i < box_amount; i++) {
-		for (int j = 0; j < ball_count; j++) {
-			if (CMovingBitmap::IsOverlap(box[i].image, ball[j].ball_image)) {
-				overlap_flag = 1;
-			}
-		}
-	}
-=======
-
->>>>>>> box
 	checkCanvasCollision();
 	checkBoxBallCollision();
 }
@@ -47,12 +36,8 @@ void CGameStateRun::OnInit() // �C������Ȥιϧγ]�w
 {
 	load_background();
 
-<<<<<<< HEAD
-	for (int i = 0; i < box_amount; i++) {
-=======
 	for (int i = 0; i < box_amount; i++)
 	{
->>>>>>> box
 		box[i].Init();
 	}
 
@@ -102,23 +87,6 @@ void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
 	frame.ShowBitmap();
-<<<<<<< HEAD
-	
-
-	//for (int i = 0; i < box_count; i++) {
-	//	if (box[i].box_count <= 0) {
-	//		continue;
-	//	}
-	//	checkBoxBallCollision();
-	//}
-	//
-	//showBallMove();
-
-	//question.ShowBitmap();
-	//show_text_score();
-	for (int i = 0; i < box_amount; i++) {
-		if (box[i].box_count <= 0) {
-=======
 
 	// question.ShowBitmap();
 	// show_text_score();
@@ -126,7 +94,6 @@ void CGameStateRun::OnShow()
 	{
 		if (box[i].box_count <= 0)
 		{
->>>>>>> box
 			continue;
 		}
 		box[i].ShowImage();
@@ -202,26 +169,6 @@ void CGameStateRun::checkCanvasCollision()
 		}
 	}
 }
-<<<<<<< HEAD
-//void CGameStateRun::showBallMove() {
-//	for (int i = 0; i < ball_count; i++) {
-//
-//		ball[i].ShowBitmap();
-//		ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
-//		box[i].yDirectionChange_flag = 0;
-//		box[i].xDirectionChange_flag = 0;
-//	}
-//}
-//
-
-void CGameStateRun::checkBoxBallCollision() {
-	
-	for (int i = 0; i < ball_count; i++) {
-		for (int j = 0; j < box_amount; j++) {
-			if (ball[i].click_flag == 1) {
-				if (box[j].box_count > 0) {
-					
-=======
 
 void CGameStateRun::checkBoxBallCollision()
 {
@@ -235,7 +182,6 @@ void CGameStateRun::checkBoxBallCollision()
 				if (box[j].box_count > 0)
 				{
 
->>>>>>> box
 					IsOverlap_Direction(ball[i], box[j]);
 					// show_text_score();
 					if (CMovingBitmap::IsOverlap(box[j].image, ball[i].ball_image))
