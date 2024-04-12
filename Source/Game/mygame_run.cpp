@@ -29,20 +29,16 @@ void CGameStateRun::OnBeginState() // �]�w�C�������һݪ��
 
 void CGameStateRun::OnMove() // ���ʹC������
 {
-	for (int i = 0; i < box_count; i++) {
-		for (int j = 0; j < ball_count; j++) {
-			if (CMovingBitmap::IsOverlap(box[i].image, ball[j].ball_image)) {
-				overlap_flag = 1;
-			}
-		}
-	}
+	
+	checkCanvasCollision();
+	checkBoxBallCollision();
 }
 
 void CGameStateRun::OnInit() // �C������Ȥιϧγ]�w
 {
 	load_background();
 
-	for (int i = 0; i < box_count; i++) {
+	for (int i = 0; i < box_amount; i++) {
 		box[i].Init();
 	}
 	
@@ -90,21 +86,10 @@ void CGameStateRun::OnShow()
 {
 	background.ShowBitmap();
 	frame.ShowBitmap();
-	checkCanvasCollision();
-	checkBoxBallCollision();
-
-	//for (int i = 0; i < box_count; i++) {
-	//	if (box[i].box_count <= 0) {
-	//		continue;
-	//	}
-	//	checkBoxBallCollision();
-	//}
-	//
-	//showBallMove();
 
 	//question.ShowBitmap();
 	//show_text_score();
-	for (int i = 0; i < box_count; i++) {
+	for (int i = 0; i < box_amount; i++) {
 		if (box[i].box_count <= 0) {
 			continue;
 		}
@@ -168,21 +153,11 @@ void CGameStateRun::checkCanvasCollision()
 		}
 	}
 }
-//void CGameStateRun::showBallMove() {
-//	for (int i = 0; i < ball_count; i++) {
-//
-//		ball[i].ShowBitmap();
-//		ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
-//		box[i].yDirectionChange_flag = 0;
-//		box[i].xDirectionChange_flag = 0;
-//	}
-//}
-//
 
 void CGameStateRun::checkBoxBallCollision() {
 	if (click_flag == 1) {
 		for (int i = 0; i < ball_count; i++) {
-			for (int j = 0; j < box_count; j++) {
+			for (int j = 0; j < box_amount; j++) {
 				if (box[j].box_count > 0) {
 					
 					IsOverlap_Direction(ball[i], box[j]);
@@ -284,6 +259,7 @@ void Box::Init()
 		this->image.LoadBitmapByString({ "resources/box-yellow.bmp" }, RGB(0, 0, 0));
 	}
 	image.SetTopLeft(x, y);
+	
 }
 
 void Box::ShowText()
