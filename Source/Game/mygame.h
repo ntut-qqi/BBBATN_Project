@@ -55,13 +55,14 @@ namespace game_framework
 	class Box
 	{
 	public:
-		Box(int box_count, int x, int y);
+		Box(int box_count, int x=-100, int y=-100);
 		int box_count;
 		CMovingBitmap image;
 		void Init();
 		void ShowImage();
 		void ShowText();
 		void UnshowBitmap();
+		void SetTopLeft(int x,int y);
 
 		int x;
 		int y;
@@ -101,8 +102,8 @@ namespace game_framework
 		void Ball_shot(double x, double y, int mouse_x, int mouse_y);
 		void SetxDirectionChange_flag(bool new_flag);
 		void SetyDirectionChange_flag(bool new_flag);
-
 		bool click_flag = 0;
+		
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -138,7 +139,7 @@ namespace game_framework
 	// �o��class���C�����C�����檫��A�D�n���C���{�����b�o��
 	// �C��Member function��Implementation���n����
 	/////////////////////////////////////////////////////////////////////////////
-
+	enum Status { READY, RUNNING };
 	class CGameStateRun : public CGameState
 	{
 	public:
@@ -153,8 +154,10 @@ namespace game_framework
 		void OnMouseMove(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
 		void OnRButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
 		void OnRButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-
+		int level = 1;
 		bool click_flag = 0;
+		int ball_return = 0;
+		Status status = Status::READY;
 
 	protected:
 		void OnMove(); // ���ʹC������
@@ -163,10 +166,27 @@ namespace game_framework
 		CMovingBitmap background;
 		CMovingBitmap frame;
 
-		int box_amount = 8;
+		int boxTotalLevel = 15;
+		int boxTotalCountinLevel = 7;
+		//Box box_array[] = {		}
 
-		// Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164),Box(1, 47 + 52 * 2, 164), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47+ 52 * 5, 164),Box(1, 47+52 * 6, 164) };
-		Box box[8] = {Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52)};
+		Box box[15][7] = {	{Box(1), Box(1),Box(1), Box(0), Box(0), Box(0),Box(0)},
+							{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
+							{Box(3), Box(0),Box(0), Box(0), Box(3), Box(3),Box(0)},
+							{Box(0), Box(4),Box(0), Box(0), Box(0), Box(4),Box(4)},
+							{Box(0), Box(0),Box(5), Box(5), Box(0), Box(0),Box(0)},
+							{Box(6), Box(6),Box(6), Box(0), Box(0), Box(0),Box(6)},
+							{Box(0), Box(0),Box(0), Box(7), Box(7), Box(7),Box(0)},
+							{Box(8), Box(8),Box(0), Box(0), Box(8), Box(0),Box(0)},
+							{Box(0), Box(0),Box(9), Box(9), Box(9), Box(9),Box(0)},
+							{Box(10), Box(10),Box(0), Box(0), Box(0), Box(10),Box(10)},
+							{Box(0), Box(11),Box(11), Box(0), Box(0), Box(11),Box(11)},
+							{Box(12), Box(0),Box(12), Box(12), Box(12), Box(12),Box(0)},
+							{Box(13), Box(0),Box(13), Box(0), Box(13), Box(0),Box(13)},
+							{Box(0), Box(14),Box(0), Box(14), Box(14), Box(0),Box(0)},
+							{Box(15), Box(15),Box(0), Box(15), Box(15), Box(15),Box(15)}
+						};
+		//Box box[8] = {Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52)};
 
 		int currentL_ball_x;
 		int currentR_ball_x;
@@ -181,6 +201,7 @@ namespace game_framework
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
 		void IsOverlap_Direction(Ball &ball, Box box);
+		
 
 		void show_text_score();
 		void showBallMove();
