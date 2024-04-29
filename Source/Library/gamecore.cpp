@@ -111,7 +111,7 @@ namespace game_framework {
 		//
 		if (SHOW_GAME_CYCLE_TIME)
 			TRACE("Ellipse time for the %d th cycle=%d \n", CSpecialEffect::GetCurrentTimeCount(), CSpecialEffect::GetEllipseTime());
-		CSpecialEffect::DelayFromSetCurrentTime(GAME_CYCLE_TIME);
+		//CSpecialEffect::DelayFromSetCurrentTime(GAME_CYCLE_TIME);
 		CSpecialEffect::SetCurrentTime();	// 設定離開OnIdle()的時間
 		return true;
 	}

@@ -60,7 +60,7 @@ namespace game_framework
 		CMovingBitmap image;
 		void Init();
 		void ShowImage();
-		void ShowText();
+		void ShowText(CDC* pDC);
 		void UnshowBitmap();
 		void SetTopLeft(int x,int y);
 
@@ -154,7 +154,10 @@ namespace game_framework
 		void OnMouseMove(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
 		void OnRButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
 		void OnRButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-		int level = 1;
+
+		void ballMove(int i);
+		void checkBallCollision(int i);
+		int level = 5;
 		bool click_flag = 0;
 		int ball_return = 0;
 		Status status = Status::READY;
