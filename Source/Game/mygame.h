@@ -163,27 +163,29 @@ namespace game_framework
 		CMovingBitmap background;
 		CMovingBitmap frame;
 
-		int box_amount = 8;
+		int box_amount = 7;
+		//Box box[2] = {Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164) };
+		Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164+52),Box(1, 47 + 52 * 2, 164+52*4), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47 + 52 * 5, 164+52*4),Box(1, 47 + 52 * 6, 164+52*6) };
 
-		// Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164),Box(1, 47 + 52 * 2, 164), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47+ 52 * 5, 164),Box(1, 47+52 * 6, 164) };
-		Box box[8] = {Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52)};
+		 //Box box[7] = { Box(1, 47, 164), Box(10, 47 + 52, 164),Box(1, 47 + 52 * 2, 164), Box(10, 47 + 52 * 3, 164), Box(1, 47 + 52 * 4, 164), Box(10, 47+ 52 * 5, 164),Box(1, 47+52 * 6, 164) };
+		//Box box[8] = { Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52) };
 
 		int currentL_ball_x;
 		int currentR_ball_x;
 		int currentU_ball_y;
 		int currentD_ball_y;
 
-		int ball_count = 2;
-		Ball ball[2] = {Ball(223, 540), Ball(203, 520)};
+		int ball_count = 1;
+		//Ball ball[2] = { Ball(223, 540), Ball(203, 520) };
+		Ball ball[1] = { Ball(223, 540) };
 
 		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
 		void IsOverlap_Direction(Ball &ball, Box box);
-
+		void show_ball();
 		void show_text_score();
-		void showBallMove();
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
