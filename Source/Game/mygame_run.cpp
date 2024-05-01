@@ -227,16 +227,13 @@ void CGameStateRun::checkBallCollision(int i) {
 		for (int k = 0; k < boxTotalCountinLevel; k++) {
 			if (ball[i].click_flag == 1){
 				if (box[j][k].box_count > 0){
-					// show_text_score();
 					IsOverlap_Direction(ball[i], box[j][k]);
 					if (CMovingBitmap::IsOverlap(box[j][k].image, ball[i].ball_image))
 					{
-						// show_text_score();
 						if (ball[i].xDirectionChange_flag == 1)
 						{
 							ball[i].dx *= -1;
 							ball[i].xDirectionChange_flag = 0;
-							// show_text_score();
 							box[j][k].box_count -= 1;
 							current_score += 1;
 						}
@@ -246,13 +243,8 @@ void CGameStateRun::checkBallCollision(int i) {
 							ball[i].yDirectionChange_flag = 0;
 							box[j][k].box_count -= 1;
 							current_score += 1;
-
-							// show_text_score();
 						}
 					}
-					//ball[i].x += ball[i].dx;
-					//ball[i].y += ball[i].dy;
-					//ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
 				}
 			}
 		}

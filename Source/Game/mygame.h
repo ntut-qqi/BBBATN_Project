@@ -202,6 +202,7 @@ namespace game_framework
 							{Box(15), Box(0),Box(0), Box(0), Box(0), Box(0),Box(15)}
 						};
 		*/
+
 		//Box box[8] = {Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52)};
 
 		int currentL_ball_x;
@@ -220,7 +221,6 @@ namespace game_framework
 		
 
 		void show_text_score();
-		void showBallMove();
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
