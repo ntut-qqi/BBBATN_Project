@@ -131,7 +131,7 @@ namespace game_framework {
 	public:
 		int phase = 6;			//關卡
 		bool sub_phase = 1;		//是否過關  0=沒過  1=過
-	    int current_score = 6;
+	    int current_score = 0;
 		
 
 		CGameState(CGame *g);

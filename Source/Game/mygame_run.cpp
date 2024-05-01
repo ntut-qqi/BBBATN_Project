@@ -107,8 +107,8 @@ void CGameStateRun::OnShow()
 	background.ShowBitmap();
 	frame.ShowBitmap();
 
-	// question.ShowBitmap();
-	// show_text_score();
+	 question.ShowBitmap();
+	 show_text_score();
 	for (int i = 0; i < level; i++) {
 		for (int j = 0; j < boxTotalCountinLevel; j++) {
 			if (box[i][j].box_count <= 0)
@@ -211,29 +211,24 @@ void CGameStateRun::checkBallCollision(int i) {
 		for (int k = 0; k < boxTotalCountinLevel; k++) {
 			if (ball[i].click_flag == 1){
 				if (box[j][k].box_count > 0){
-					// show_text_score();
 					IsOverlap_Direction(ball[i], box[j][k]);
 					if (CMovingBitmap::IsOverlap(box[j][k].image, ball[i].ball_image))
 					{
-						// show_text_score();
 						if (ball[i].xDirectionChange_flag == 1)
 						{
 							ball[i].dx *= -1;
 							ball[i].xDirectionChange_flag = 0;
-							// show_text_score();
 							box[j][k].box_count -= 1;
+							current_score += 1;
 						}
 						else if (ball[i].yDirectionChange_flag == 1)
 						{
 							ball[i].dy *= -1;
 							ball[i].yDirectionChange_flag = 0;
 							box[j][k].box_count -= 1;
-							// show_text_score();
+							current_score += 1;
 						}
 					}
-					//ball[i].x += ball[i].dx;
-					//ball[i].y += ball[i].dy;
-					//ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
 				}
 			}
 		}
