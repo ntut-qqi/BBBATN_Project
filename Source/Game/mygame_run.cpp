@@ -33,7 +33,10 @@ void CGameStateRun::OnMove() // ���ʹC������
 	if (status == Status::READY) {
 		for (int i = 0; i < level; i++) {
 			for (int j = 0; j < boxTotalCountinLevel; j++) {
-				box[i][j].SetTopLeft(47 + j * box[i][j].image.GetWidth(), 164 + (level-i-1) * box[i][j].image.GetHeight());
+			
+					box[i][j].SetTopLeft(47 + j * box[i][j].image.GetWidth(), 164 + (level - i - 1) * box[i][j].image.GetHeight());
+				
+				
 			}
 		}
 	}
@@ -48,6 +51,10 @@ void CGameStateRun::OnMove() // ���ʹC������
 	if (ball_return == ball_count && status == Status::RUNNING) {
 		status = Status::READY;
 		level += 1;
+	}
+
+	if (total_score == current_score) {
+		GotoGameState(GAME_STATE_OVER);
 	}
 }
 
@@ -77,8 +84,10 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // �B�z�ƹ����ʧ@
 {
 	status = Status::RUNNING;
+	//ball_status = Status::RUNNING;
 	for (int i = 0; i < 2; i++)
 	{
+		ball[i].ball_status = Status::RUNNING;
 		ball[i].mouse_x = point.x;
 		ball[i].mouse_y = point.y;
 		ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
@@ -162,9 +171,13 @@ void CGameStateRun::checkCanvasCollision()
 			}
 			if (ball[i].GetTop() >= 564)
 			{
-				ball[i].x = ball[i].GetLeft();
-
+				//status = Status::READY;
 				ball[i].click_flag = 0;
+				ball[i].ball_status = Status::READY;
+				ball[i].x = ball[i].GetLeft();
+				currentD_ball_y = min(560, int(ball[i].GetTop() + ball[i].dy));
+				ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx+2), currentD_ball_y);
+				
 			}
 			// max min
 			//if (ball[i].GetLeft() + ball[i].dx <= 45)
@@ -201,8 +214,11 @@ void CGameStateRun::checkCanvasCollision()
 void CGameStateRun::checkBoxBallCollision()
 {
 	for (int i = 0; i < ball_count; i++){
-		checkBallCollision(i);
-		ballMove(i);
+		if (ball[i].ball_status == Status::RUNNING) {
+			checkBallCollision(i);
+			ballMove(i);
+		}
+		
 	}
 }
 
@@ -237,9 +253,11 @@ void CGameStateRun::checkBallCollision(int i) {
 
 
 void CGameStateRun::ballMove(int i) {
-	ball[i].x += 3*ball[i].dx;
-	ball[i].y += 3*ball[i].dy;
-	ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+	if (ball[i].ball_status == Status::RUNNING) {
+		ball[i].x += 3 * ball[i].dx;
+		ball[i].y += 3 * ball[i].dy;
+		ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+	}
 }
 
 void CGameStateRun::IsOverlap_Direction(Ball &ball, Box box)
@@ -415,7 +433,7 @@ void Ball::Ball_shot(double x, double y, int mouse_x, int mouse_y)
 {
 	// pow(pow((mouse_x - x),2)+ pow((mouse_y - y), 2),0.5)
 	dx = (mouse_x - x) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5);
-	dy = (mouse_y - y) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5);
+	dy = abs((mouse_y - y) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5))*-1;
 }
 void Ball::SetyDirectionChange_flag(bool new_flag)
 {

@@ -43,7 +43,7 @@ namespace game_framework
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
-
+	enum Status { READY, RUNNING };
 	enum AUDIO_ID
 	{				// �w�q�U�ح��Ī��s��
 		AUDIO_DING, // 0
@@ -103,6 +103,7 @@ namespace game_framework
 		void SetxDirectionChange_flag(bool new_flag);
 		void SetyDirectionChange_flag(bool new_flag);
 		bool click_flag = 0;
+		Status ball_status = Status::READY;
 		
 	};
 
@@ -139,7 +140,7 @@ namespace game_framework
 	// �o��class���C�����C�����檫��A�D�n���C���{�����b�o��
 	// �C��Member function��Implementation���n����
 	/////////////////////////////////////////////////////////////////////////////
-	enum Status { READY, RUNNING };
+	
 	class CGameStateRun : public CGameState
 	{
 	public:
@@ -169,11 +170,22 @@ namespace game_framework
 		CMovingBitmap background;
 		CMovingBitmap frame;
 
-		int boxTotalLevel = 15;
+		int boxTotalLevel = 8;
 		int boxTotalCountinLevel = 7;
+		int total_score = 14;
 		//Box box_array[] = {		}
-
-		Box box[15][7] = {	{Box(1), Box(1),Box(1), Box(0), Box(0), Box(0),Box(0)},
+		Box box[8][7] = { {Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
+						{Box(0), Box(0),Box(0), Box(0), Box(3), Box(3),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}
+							
+	};
+		/*
+		Box box[15][7] = {	{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
 							{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
 							{Box(3), Box(0),Box(0), Box(0), Box(3), Box(3),Box(0)},
 							{Box(0), Box(4),Box(0), Box(0), Box(0), Box(4),Box(4)},
@@ -185,10 +197,12 @@ namespace game_framework
 							{Box(10), Box(10),Box(0), Box(0), Box(0), Box(10),Box(10)},
 							{Box(0), Box(11),Box(11), Box(0), Box(0), Box(11),Box(11)},
 							{Box(12), Box(0),Box(12), Box(12), Box(12), Box(12),Box(0)},
-							{Box(13), Box(0),Box(13), Box(0), Box(13), Box(0),Box(13)},
-							{Box(0), Box(14),Box(0), Box(14), Box(14), Box(0),Box(0)},
-							{Box(15), Box(15),Box(0), Box(15), Box(15), Box(15),Box(15)}
-		};
+							{Box(13), Box(0),Box(0), Box(0), Box(0), Box(0),Box(13)},
+							{Box(0), Box(14),Box(0), Box(0), Box(0), Box(0),Box(0)},
+							{Box(15), Box(0),Box(0), Box(0), Box(0), Box(0),Box(15)}
+						};
+		*/
+
 		//Box box[8] = {Box(1, 47 + 52 * 6, 164 + 52 * 7), Box(1, 47 + 52 * 6, 164 + 52 * 6), Box(10, 47 + 52 * 6, 164 + 52 * 5), Box(1, 47 + 52 * 5, 164 + 52 * 4), Box(10, 47 + 52 * 5, 164 + 52 * 3), Box(1, 47 + 52 * 5, 164 + 52 * 2), Box(10, 47 + 52 * 5, 164), Box(1, 47 + 52 * 5, 164 + 52)};
 
 		int currentL_ball_x;
