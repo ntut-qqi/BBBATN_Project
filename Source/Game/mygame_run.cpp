@@ -79,19 +79,32 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				checkBallStatus += 1;
 			}
 		}
-		if (checkBallStatus == ball_count) {//¤U¤@Ãö
+
+		if (checkBallStatus == ball_count) {//try again
 			phase = 1;
 			sub_phase = 0;
 			current_score = 0;
-			level = -1;
+			level = 0;
 			status = Status::RUNNING;
-			//for (int i = 0; i < ball_count; i++) {
-			//	ball[i].ball_status = Status::READY;
-			//}
-			//click_flag = 1;
 			GotoGameState(GAME_STATE_OVER);
 		}
 	}
+	//lose
+	
+	//int checkBallStatus = 0;
+	//for (int i = 0; i < ball_count; i++) {
+	//	if (ball[i].ball_status == Status::READY) {//§PÂ_¨CÁû²y³£ready
+	//		checkBallStatus += 1;
+	//	}
+	//}
+	//if (checkBallStatus == ball_count) {//try again
+	//	phase = 1;
+	//	sub_phase = 0;
+	//	current_score = 0;
+	//	level = 0;
+	//	status = Status::RUNNING;
+	//	GotoGameState(GAME_STATE_OVER);
+	//}
 	else if (current_score == total_score_phase2) {	//²Ä2Ãö win
 		phase = 2;
 		sub_phase = 1;
@@ -245,6 +258,8 @@ void CGameStateRun::checkCanvasCollision()
 				// ball[i].x = ball[i].GetLeft();
 				currentD_ball_y = min(560, int(ball[i].GetTop() + ball[i].dy));
 				ball[i].SetTopLeft(223, currentD_ball_y);
+				ball[i].RenewCoordinate(223, currentD_ball_y);
+				
 				// ?????°ä¸­?????????
 				//if (ball[i].GetLeft() > 223)
 				//{
@@ -277,7 +292,6 @@ void CGameStateRun::checkCanvasCollision()
 				//	}
 				//}
 
-				ball[i].x = 223;
 				// ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx+2), currentD_ball_y);
 			}
 			// max min
