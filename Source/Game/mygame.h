@@ -70,6 +70,7 @@ namespace game_framework
 		int GetTop();
 		// void IsOverlap_Direction(Ball ball);
 		int boxWidth = 52;
+		int box_count_Init=0;
 	};
 
 	class Ball
@@ -172,7 +173,13 @@ namespace game_framework
 
 		int boxTotalLevel = 8;
 		int boxTotalCountinLevel = 7;
-		int total_score = 14;
+		int total_score_phase1 = 14;
+		int total_score_phase2 = 14;
+		int total_score_phase3 = 14;
+		int total_score_phase4 = 14;
+		int total_score_phase5 = 14;
+		int total_score_phase6 = 14;
+
 		//Box box_array[] = {		}
 		Box box[8][7] = { {Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
