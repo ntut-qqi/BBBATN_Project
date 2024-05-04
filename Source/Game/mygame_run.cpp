@@ -272,9 +272,6 @@ void CGameStateRun::checkCanvasCollision()
 
 				//ball[i].SetTopLeft(223, currentD_ball_y);
 				//ball[i].RenewCoordinate(223, currentD_ball_y);
-				
-				// ?????°ä¸­?????????
-				
 			}
 			// max min
 			// if (ball[i].GetLeft() + ball[i].dx <= 45)
