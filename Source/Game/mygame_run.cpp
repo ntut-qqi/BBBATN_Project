@@ -24,46 +24,152 @@ CGameStateRun::~CGameStateRun()
 
 void CGameStateRun::OnBeginState() // ï¿½]ï¿½wï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ýªï¿½ï¿½Ü¼ï¿½
 {
+	for (int i = 0; i < boxTotalLevel; i++)
+	{
+		for (int j = 0; j < boxTotalCountinLevel; j++)
+		{
+			box[i][j].Init();
+		}
+	}
+	for (int i = 0; i < ball_count; i++)
+	{
+		ball[i].Init();
+	}
 }
 
 void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	checkCanvasCollision();
 	checkBoxBallCollision();
-	if (status == Status::READY) {
-		for (int i = 0; i < level; i++) {
-			for (int j = 0; j < boxTotalCountinLevel; j++) {
-			
-					box[i][j].SetTopLeft(47 + j * box[i][j].image.GetWidth(), 164 + (level - i - 1) * box[i][j].image.GetHeight());
-				
-				
+	if (status == Status::READY)
+	{
+		for (int i = 0; i < level; i++)
+		{
+			for (int j = 0; j < boxTotalCountinLevel; j++)
+			{
+
+				box[i][j].SetTopLeft(47 + j * box[i][j].image.GetWidth(), 164 + (level - i - 1) * box[i][j].image.GetHeight());
 			}
 		}
 	}
-	
+
+
 	int ball_return = 0;
-	for (int i = 0; i < ball_count; i++) {
-		if (status == Status::RUNNING && ball[i].click_flag == 0) {
+	for (int i = 0; i < ball_count; i++)//
+	{
+		if (status == Status::RUNNING && ball[i].click_flag == 0)	//¨âÁû²y³£¸I¦a	//²y¸I©³ÅÜ0
+		{
 			ball_return += 1;
 		}
 	}
 
-	if (ball_return == ball_count && status == Status::RUNNING) {
+	if (ball_return == ball_count && status == Status::RUNNING)
+	{
 		status = Status::READY;
 		level += 1;
 	}
+	//³Ó§Q¶i¤JGAME_STATE_OVER
+	//if (current_score == total_score_phase1)	//²Ä1Ãö win
+	
+	if (level >= canva_boxheight) {
+		int check_boxlevel_index = 0;
+		check_boxlevel_index = level - 8;
+		for (int i = 0; i < 7; i++) {
+			if (box[check_boxlevel_index][i].box_count > 0) {
+				touch_canva_lose_flag = 1;
+			}
+		}
+	}
 
-	if (total_score == current_score) {
+	if (current_score == total_score_phase1)	//²Ä1Ãö win
+	{
+		int checkBallStatus = 0;
+		for (int i = 0; i < ball_count; i++) {
+			if (ball[i].ball_status == Status::READY) {//§PÂ_¨CÁû²y³£ready
+				checkBallStatus += 1;
+			}
+		}
+
+		if (checkBallStatus == ball_count) {//try again
+			phase = 1;
+			sub_phase = 1;
+			current_score = 0;
+			level = 0;
+			status = Status::RUNNING;
+			GotoGameState(GAME_STATE_OVER);
+		}
+	}
+	else if (touch_canva_lose_flag == 1) {
+		int checkBallStatus = 0;
+		for (int i = 0; i < ball_count; i++) {
+			if (ball[i].ball_status == Status::READY) {//§PÂ_¨CÁû²y³£ready
+				checkBallStatus += 1;
+			}
+		}
+
+		if (checkBallStatus == ball_count) {//try again
+			phase = 1;
+			sub_phase = 0;
+			current_score = 0;
+			level = 0;
+			touch_canva_lose_flag = 0;
+			status = Status::RUNNING;
+			GotoGameState(GAME_STATE_OVER);
+		}
+	}
+	//lose
+	
+	//int checkBallStatus = 0;
+	//for (int i = 0; i < ball_count; i++) {
+	//	if (ball[i].ball_status == Status::READY) {//§PÂ_¨CÁû²y³£ready
+	//		checkBallStatus += 1;
+	//	}
+	//}
+	//if (checkBallStatus == ball_count) {//try again
+	//	phase = 1;
+	//	sub_phase = 0;
+	//	current_score = 0;
+	//	level = 0;
+	//	status = Status::RUNNING;
+	//	GotoGameState(GAME_STATE_OVER);
+	//}
+	else if (current_score == total_score_phase2) {	//²Ä2Ãö win
+		phase = 2;
+		sub_phase = 1;
 		GotoGameState(GAME_STATE_OVER);
 	}
+	else if (current_score == total_score_phase3) {	//²Ä3Ãö win
+		phase = 2;
+		sub_phase = 1;
+		GotoGameState(GAME_STATE_OVER);
+	}
+	else if (current_score == total_score_phase4) {	//²Ä4Ãö win
+		phase = 2;
+		sub_phase = 1;
+		GotoGameState(GAME_STATE_OVER);
+	}
+	else if (current_score == total_score_phase5) {	//²Ä5Ãö win
+		phase = 2;
+		sub_phase = 1;
+		GotoGameState(GAME_STATE_OVER);
+	}
+	else if (current_score == total_score_phase6) {	//²Ä6Ãö win
+		phase = 2;
+		sub_phase = 1;
+		GotoGameState(GAME_STATE_OVER);
+	}
+
 }
 
-void CGameStateRun::OnInit() // ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤Î¹Ï§Î³]ï¿½w
+void CGameStateRun::OnInit() // ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?¤Î¹Ï§Î³]ï¿½w
 {
 	load_background();
 
-	for (int i = 0; i < boxTotalLevel; i++) {
-		for (int j = 0; j < boxTotalCountinLevel; j++){
+	for (int i = 0; i < boxTotalLevel; i++)
+	{
+		for (int j = 0; j < boxTotalCountinLevel; j++)
+		{
+
 			box[i][j].Init();
 		}
 	}
@@ -84,7 +190,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
 	status = Status::RUNNING;
-	//ball_status = Status::RUNNING;
+	// ball_status = Status::RUNNING;
 	for (int i = 0; i < 2; i++)
 	{
 		ball[i].ball_status = Status::RUNNING;
@@ -116,16 +222,17 @@ void CGameStateRun::OnShow()
 	background.ShowBitmap();
 	frame.ShowBitmap();
 
-	 question.ShowBitmap();
-	 show_text_score();
-	for (int i = 0; i < level; i++) {
-		for (int j = 0; j < boxTotalCountinLevel; j++) {
+	question.ShowBitmap();
+	show_text_score();
+	for (int i = 0; i < level; i++)
+	{
+		for (int j = 0; j < boxTotalCountinLevel; j++)
+		{
 			if (box[i][j].box_count <= 0)
 			{
 				continue;
 			}
 			box[i][j].ShowImage();
-			
 		}
 	}
 	for (int i = 0; i < ball_count; i++)
@@ -134,8 +241,10 @@ void CGameStateRun::OnShow()
 	}
 
 	CDC *pDC = CDDraw::GetBackCDC();
-	for (int i = 0; i < level; i++) {
-		for (int j = 0; j < boxTotalCountinLevel; j++) {
+	for (int i = 0; i < level; i++)
+	{
+		for (int j = 0; j < boxTotalCountinLevel; j++)
+		{
 			box[i][j].ShowText(pDC);
 		}
 	}
@@ -190,53 +299,59 @@ void CGameStateRun::checkCanvasCollision()
 				}
 			}
 			// max min
-			//if (ball[i].GetLeft() + ball[i].dx <= 45)
+			// if (ball[i].GetLeft() + ball[i].dx <= 45)
 			//{
 			//	currentL_ball_x = max(45, int(ball[i].GetLeft() + ball[i].dx));
 			//	//ball[i].SetTopLeft(currentL_ball_x, int(ball[i].GetTop() + ball[i].dy));
 			//}
-			//else if (ball[i].GetLeft() + ball[i].dx >= 395)
+			// else if (ball[i].GetLeft() + ball[i].dx >= 395)
 			//{
 			//	currentR_ball_x = min(395, int(ball[i].GetLeft() + ball[i].dx));
 			//	//ball[i].SetTopLeft(currentR_ball_x, int(ball[i].GetTop() + ball[i].dy));
 			//}
-			//else if (ball[i].GetTop() <= 164)
+			// else if (ball[i].GetTop() <= 164)
 			//{
 			//	currentU_ball_y = max(164, int(ball[i].GetTop() + ball[i].dy));
 			//	//ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx), currentU_ball_y);
 			//}
-			//else if (ball[i].GetTop() >= 564)
+			// else if (ball[i].GetTop() >= 564)
 			//{
 			//	currentD_ball_y = min(564, int(ball[i].GetTop() + ball[i].dy));
 			//	//ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx+2), currentD_ball_y);
 			//}
 			//// ï¿½|ï¿½]ï¿½oï¿½ï¿½
-			//else
+			// else
 			//{
 			//	//ball[i].SetTopLeft(int(ball[i].x), int(ball[i].y));
-			//}
-			// ball[i].ShowBitmap();
-			// ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
+			// }
+			//  ball[i].ShowBitmap();
+			//  ball[i].RenewCoordinate(ball[i].GetLeft() + ball[i].dx, ball[i].GetTop() + ball[i].dy);
 		}
 	}
 }
 
 void CGameStateRun::checkBoxBallCollision()
 {
-	for (int i = 0; i < ball_count; i++){
-		if (ball[i].ball_status == Status::RUNNING) {
+	for (int i = 0; i < ball_count; i++)
+	{
+		if (ball[i].ball_status == Status::RUNNING)
+		{
 			checkBallCollision(i);
 			ballMove(i);
 		}
-		
 	}
 }
 
-void CGameStateRun::checkBallCollision(int i) {
-	for (int j = 0; j < level; j++) {
-		for (int k = 0; k < boxTotalCountinLevel; k++) {
-			if (ball[i].click_flag == 1){
-				if (box[j][k].box_count > 0){
+void CGameStateRun::checkBallCollision(int i)
+{
+	for (int j = 0; j < level; j++)
+	{
+		for (int k = 0; k < boxTotalCountinLevel; k++)
+		{
+			if (ball[i].click_flag == 1)
+			{
+				if (box[j][k].box_count > 0)
+				{
 					IsOverlap_Direction(ball[i], box[j][k]);
 					if (CMovingBitmap::IsOverlap(box[j][k].image, ball[i].ball_image))
 					{
@@ -261,9 +376,10 @@ void CGameStateRun::checkBallCollision(int i) {
 	}
 }
 
-
-void CGameStateRun::ballMove(int i) {
-	if (ball[i].ball_status == Status::RUNNING) {
+void CGameStateRun::ballMove(int i)
+{
+	if (ball[i].ball_status == Status::RUNNING)
+	{
 		ball[i].x += 3 * ball[i].dx;
 		ball[i].y += 3 * ball[i].dy;
 		ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
@@ -274,7 +390,7 @@ void CGameStateRun::IsOverlap_Direction(Ball &ball, Box box)
 {
 	if ((ball.GetLeft() >= box.GetLeft() - ball.ballWidth) && (ball.GetLeft() <= box.GetLeft() + box.boxWidth))
 	{
-		if ((ball.GetTop()) == (box.GetTop() - ball.ballWidth ) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth+1) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth+2) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth + 3))
+		if ((ball.GetTop()) == (box.GetTop() - ball.ballWidth) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth + 1) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth + 2) || (ball.GetTop()) == (box.GetTop() - ball.ballWidth + 3))
 		{
 			ball.SetyDirectionChange_flag(1);
 			question.ShowBitmap();
@@ -288,7 +404,7 @@ void CGameStateRun::IsOverlap_Direction(Ball &ball, Box box)
 	if ((ball.GetTop() >= box.GetTop() - ball.ballWidth) && (ball.GetTop() <= box.GetTop() + box.boxWidth))
 	{
 		question.ShowBitmap();
-		if ((ball.GetLeft() + ball.ballWidth == box.GetLeft() ) || (ball.GetLeft() + ball.ballWidth == box.GetLeft()+1) || (ball.GetLeft() + ball.ballWidth == box.GetLeft()+2) || (ball.GetLeft() + ball.ballWidth == box.GetLeft() + 3))
+		if ((ball.GetLeft() + ball.ballWidth == box.GetLeft()) || (ball.GetLeft() + ball.ballWidth == box.GetLeft() + 1) || (ball.GetLeft() + ball.ballWidth == box.GetLeft() + 2) || (ball.GetLeft() + ball.ballWidth == box.GetLeft() + 3))
 		{
 			ball.SetxDirectionChange_flag(1);
 			question.ShowBitmap();
@@ -317,6 +433,7 @@ Box::Box(int box_count, int x, int y)
 	this->box_count = box_count;
 	this->x = x;
 	this->y = y;
+	this->box_count_Init = box_count;
 }
 
 void Box::ShowImage()
@@ -326,6 +443,7 @@ void Box::ShowImage()
 
 void Box::Init()
 {
+	box_count = box_count_Init;
 	if (box_count >= 16 && box_count <= 20)
 	{
 		this->image.LoadBitmapByString({"resources/box-blue.bmp"}, RGB(0, 0, 0));
@@ -346,15 +464,16 @@ void Box::Init()
 	{
 		this->image.LoadBitmapByString({"resources/box-yellow.bmp"}, RGB(0, 0, 0));
 	}
-	else if (box_count ==0) {
-		this->image.LoadBitmapByString({ "resources/box-black.bmp" }, RGB(0, 0, 0));
+	else if (box_count == 0)
+	{
+		this->image.LoadBitmapByString({"resources/box-black.bmp"}, RGB(0, 0, 0));
 	}
 	image.SetTopLeft(x, y);
 }
 
-void Box::ShowText(CDC* pDC)
+void Box::ShowText(CDC *pDC)
 {
-	
+
 	if (box_count == 1)
 	{
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 800);
@@ -395,7 +514,8 @@ void Box::UnshowBitmap()
 	image.UnshowBitmap();
 }
 
-void Box::SetTopLeft(int x,int y) {
+void Box::SetTopLeft(int x, int y)
+{
 	return image.SetTopLeft(x, y);
 }
 
@@ -443,7 +563,7 @@ void Ball::Ball_shot(double x, double y, int mouse_x, int mouse_y)
 {
 	// pow(pow((mouse_x - x),2)+ pow((mouse_y - y), 2),0.5)
 	dx = (mouse_x - x) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5);
-	dy = abs((mouse_y - y) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5))*-1;
+	dy = abs((mouse_y - y) / pow(pow((mouse_x - x), 2) + pow((mouse_y - y), 2), 0.5)) * -1;
 }
 void Ball::SetyDirectionChange_flag(bool new_flag)
 {

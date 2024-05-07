@@ -29,6 +29,9 @@ namespace game_framework {
 
 	CGame CGame::instance;
 
+	int CGameState::phase = 0;
+	bool CGameState::sub_phase = 0;
+
 	CGame::CGame()
 		: NUM_GAME_STATES(3)
 	{
