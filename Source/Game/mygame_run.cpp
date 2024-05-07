@@ -171,13 +171,23 @@ void CGameStateRun::checkCanvasCollision()
 			}
 			if (ball[i].GetTop() >= 564)
 			{
-				//status = Status::READY;
+				// status = Status::READY;
 				ball[i].click_flag = 0;
 				ball[i].ball_status = Status::READY;
-				ball[i].x = ball[i].GetLeft();
+				// ball[i].x = ball[i].GetLeft();
 				currentD_ball_y = min(560, int(ball[i].GetTop() + ball[i].dy));
-				ball[i].SetTopLeft(int(ball[i].GetLeft() + ball[i].dx+2), currentD_ball_y);
-				
+				int a;
+				a = abs(ball[i].GetLeft() - 223);
+				for (int j = 0; j < a; j++) {
+					if (ball[i].GetLeft() > 223) {
+						ball[i].SetTopLeft(((ball[i].GetLeft()) - 1), currentD_ball_y);
+						ball[i].RenewCoordinate(((ball[i].GetLeft()) - 1), currentD_ball_y);
+					}
+					else {
+						ball[i].SetTopLeft(((ball[i].GetLeft()) + 1), currentD_ball_y);
+						ball[i].RenewCoordinate(((ball[i].GetLeft()) + 1), currentD_ball_y);
+					}
+				}
 			}
 			// max min
 			//if (ball[i].GetLeft() + ball[i].dx <= 45)
