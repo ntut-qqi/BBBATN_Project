@@ -50,13 +50,13 @@ namespace game_framework
 		AUDIO_LAKE, // 1
 		AUDIO_NTUT	// 2
 	};
-	class Ball;
 
 	class Box
 	{
 	public:
-		Box(int box_count, int x=-100, int y=-100);
+		Box(int box_count, bool Box_eat_flag=0, int x = -100, int y = -100);
 		int box_count;
+		int changeBall_flag;
 		CMovingBitmap image;
 		void Init();
 		void ShowImage();
@@ -71,7 +71,21 @@ namespace game_framework
 		// void IsOverlap_Direction(Ball ball);
 		int boxWidth = 52;
 		int box_count_Init=0;
+
+		bool Box_eatBall_flag;
+
 	};
+
+	//class Box_eat : public Box {
+	//public:
+	//	int box_count;
+	//	int x;
+	//	int y;
+	//	int box_count_Init;
+	//	bool Box_eat_flag;
+	//	// Constructor
+	//	Box_eat(int box_count, int x = -100, int y = -100, bool Box_eat_flag = 0);
+	//};
 
 	class Ball
 	{
@@ -95,9 +109,11 @@ namespace game_framework
 
 		bool xDirectionChange_flag = 0;
 		bool yDirectionChange_flag = 0;
+		bool UnShow_flag = 0;
 
 		void Init();
 		void ShowBitmap();
+		void UnshowBitmap();
 		void SetTopLeft(int set_x, int set_y);
 		void RenewCoordinate(int set_x, int set_y);
 		void Ball_shot(double x, double y, int mouse_x, int mouse_y);
@@ -184,17 +200,15 @@ namespace game_framework
 		int total_score_phase5 = 14;
 		int total_score_phase6 = 14;
 
-		//Box box_array[] = {		}
-		Box box[8][7] = { {Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
+		Box box[8][7] = { {Box(1,1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
-						{Box(0), Box(0),Box(0), Box(0), Box(3), Box(3),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(3,1), Box(3),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}
-							
-	};
+		};
 		/*
 		Box box[15][7] = {	{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
 							{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
@@ -222,6 +236,8 @@ namespace game_framework
 		int currentD_ball_y;
 
 		int ball_count = 2;
+		int ball_count_reset = 2;
+
 		Ball ball[2] = {Ball(223, 540), Ball(203, 520)};
 
 		CMovingBitmap question;

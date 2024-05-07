@@ -71,6 +71,7 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//³Ó§Q¶i¤JGAME_STATE_OVER
 	//if (current_score == total_score_phase1)	//²Ä1Ãö win
 	
+	//check if lose
 	if (level >= canva_boxheight) {
 		int check_boxlevel_index = 0;
 		check_boxlevel_index = level - 8;
@@ -80,7 +81,7 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			}
 		}
 	}
-
+	//check win lose & goto GAME_STATE_OVER
 	if (current_score == total_score_phase1)	//²Ä1Ãö win
 	{
 		int checkBallStatus = 0;
@@ -113,6 +114,12 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			current_score = 0;
 			level = 0;
 			touch_canva_lose_flag = 0;
+			ball_count = ball_count_reset;
+			for (int i = 0; i < ball_count; i++) {
+				ball[i].UnShow_flag = 0;
+				ball[i].SetTopLeft(223, currentD_ball_y);
+				ball[i].RenewCoordinate(223, currentD_ball_y);
+			}
 			status = Status::RUNNING;
 			GotoGameState(GAME_STATE_OVER);
 		}
@@ -237,6 +244,9 @@ void CGameStateRun::OnShow()
 	}
 	for (int i = 0; i < ball_count; i++)
 	{
+		if (ball[i].UnShow_flag == 1) {
+			continue;
+		}
 		ball[i].ShowBitmap();
 	}
 
@@ -355,20 +365,29 @@ void CGameStateRun::checkBallCollision(int i)
 					IsOverlap_Direction(ball[i], box[j][k]);
 					if (CMovingBitmap::IsOverlap(box[j][k].image, ball[i].ball_image))
 					{
-						if (ball[i].xDirectionChange_flag == 1)
-						{
-							ball[i].dx *= -1;
-							ball[i].xDirectionChange_flag = 0;
+						if (box[j][k].Box_eatBall_flag == 1) {
+							ball[i].UnShow_flag = 1;
+							ball_count -= 1;
 							box[j][k].box_count -= 1;
 							current_score += 1;
 						}
-						else if (ball[i].yDirectionChange_flag == 1)
-						{
-							ball[i].dy *= -1;
-							ball[i].yDirectionChange_flag = 0;
-							box[j][k].box_count -= 1;
-							current_score += 1;
+						else{
+							if (ball[i].xDirectionChange_flag == 1)
+							{
+								ball[i].dx *= -1;
+								ball[i].xDirectionChange_flag = 0;
+								box[j][k].box_count -= 1;
+								current_score += 1;
+							}
+							else if (ball[i].yDirectionChange_flag == 1)
+							{
+								ball[i].dy *= -1;
+								ball[i].yDirectionChange_flag = 0;
+								box[j][k].box_count -= 1;
+								current_score += 1;
+							}
 						}
+						
 					}
 				}
 			}
@@ -428,9 +447,10 @@ void CGameStateRun::show_text_score()
 	CDDraw::ReleaseBackCDC();
 }
 
-Box::Box(int box_count, int x, int y)
+Box::Box(int box_count, bool Box_eat_flag, int x, int y)
 {
 	this->box_count = box_count;
+	this->Box_eatBall_flag = Box_eat_flag;
 	this->x = x;
 	this->y = y;
 	this->box_count_Init = box_count;
@@ -444,7 +464,12 @@ void Box::ShowImage()
 void Box::Init()
 {
 	box_count = box_count_Init;
-	if (box_count >= 16 && box_count <= 20)
+	
+	if (Box_eatBall_flag)
+	{
+	this->image.LoadBitmapByString({ "resources/box-black.bmp" }, RGB(0, 0, 0));
+	}
+	else if (box_count >= 16 && box_count <= 20)
 	{
 		this->image.LoadBitmapByString({"resources/box-blue.bmp"}, RGB(0, 0, 0));
 	}
@@ -468,6 +493,7 @@ void Box::Init()
 	{
 		this->image.LoadBitmapByString({"resources/box-black.bmp"}, RGB(0, 0, 0));
 	}
+	
 	image.SetTopLeft(x, y);
 }
 
@@ -530,6 +556,11 @@ void Ball::ShowBitmap()
 	ball_image.ShowBitmap();
 }
 
+void Ball::UnshowBitmap()
+{
+	ball_image.UnshowBitmap();
+}
+
 void Ball::Init()
 {
 
@@ -572,4 +603,8 @@ void Ball::SetyDirectionChange_flag(bool new_flag)
 void Ball::SetxDirectionChange_flag(bool new_flag)
 {
 	xDirectionChange_flag = new_flag;
-}
+}   
+
+//Box_eat::Box_eat(int box_count, int x, int y, bool Box_eat_flag) : Box(box_count, x, y) {
+//	this->Box_eat_flag = Box_eat_flag;
+//}
