@@ -162,6 +162,10 @@ namespace game_framework
 		int level = 1;
 		bool click_flag = 0;
 		int ball_return = 0;
+		int canva_boxheight = 8;
+		int canva_boxwidth = 7;
+		bool touch_canva_lose_flag = 0;
+
 		Status status = Status::READY;
 
 	protected:

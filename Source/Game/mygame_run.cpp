@@ -71,8 +71,35 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//³Ó§Q¶i¤JGAME_STATE_OVER
 	//if (current_score == total_score_phase1)	//²Ä1Ãö win
 	
+	if (level >= canva_boxheight) {
+		int check_boxlevel_index = 0;
+		check_boxlevel_index = level - 8;
+		for (int i = 0; i < 7; i++) {
+			if (box[check_boxlevel_index][i].box_count > 0) {
+				touch_canva_lose_flag = 1;
+			}
+		}
+	}
+
 	if (current_score == total_score_phase1)	//²Ä1Ãö win
 	{
+		int checkBallStatus = 0;
+		for (int i = 0; i < ball_count; i++) {
+			if (ball[i].ball_status == Status::READY) {//§PÂ_¨CÁû²y³£ready
+				checkBallStatus += 1;
+			}
+		}
+
+		if (checkBallStatus == ball_count) {//try again
+			phase = 1;
+			sub_phase = 1;
+			current_score = 0;
+			level = 0;
+			status = Status::RUNNING;
+			GotoGameState(GAME_STATE_OVER);
+		}
+	}
+	else if (touch_canva_lose_flag == 1) {
 		int checkBallStatus = 0;
 		for (int i = 0; i < ball_count; i++) {
 			if (ball[i].ball_status == Status::READY) {//§PÂ_¨CÁû²y³£ready
@@ -85,6 +112,7 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			sub_phase = 0;
 			current_score = 0;
 			level = 0;
+			touch_canva_lose_flag = 0;
 			status = Status::RUNNING;
 			GotoGameState(GAME_STATE_OVER);
 		}
