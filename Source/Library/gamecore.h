@@ -129,8 +129,8 @@ namespace game_framework {
 
 	class CGameState {
 	public:
-		static int phase;			//關卡
-		static bool sub_phase ;		//是否過關  0=沒過  1=過
+		//static int phase;			//關卡
+		//static bool sub_phase ;		//是否過關  0=沒過  1=過
 	    int current_score = 0;
 		
 
