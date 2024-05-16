@@ -43,18 +43,32 @@ namespace game_framework
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
 	/////////////////////////////////////////////////////////////////////////////
-	enum Status { READY, RUNNING };
+	enum Status { READY, RUNNING, DEAD_Ball };
 	enum AUDIO_ID
 	{				// �w�q�U�ح��Ī��s��
 		AUDIO_DING, // 0
 		AUDIO_LAKE, // 1
 		AUDIO_NTUT	// 2
 	};
+	class Bubble {
+	public:
+		Bubble(int IsBubble_flag = 0,int x = -100, int y = -100);
+		CMovingBitmap image;
+		void Init();
+		void ShowImage();
+		void SetTopLeft(int x, int y);
+		int x;
+		int y;
+		int GetLeft();
+		int GetTop();
+		int IsBubble_flag = 0;
+		int IsShow_flag = 1;
 
+	};
 	class Box
 	{
 	public:
-		Box(int box_count, bool Box_eat_flag=0, int x = -100, int y = -100);
+		Box(int box_count, int Boxtype_flag=0, int x = -100, int y = -100);
 		int box_count;
 		int changeBall_flag;
 		CMovingBitmap image;
@@ -71,8 +85,7 @@ namespace game_framework
 		// void IsOverlap_Direction(Ball ball);
 		int boxWidth = 52;
 		int box_count_Init=0;
-
-		bool Box_eatBall_flag;
+		int Boxtype_flag;
 
 	};
 
@@ -109,7 +122,7 @@ namespace game_framework
 
 		bool xDirectionChange_flag = 0;
 		bool yDirectionChange_flag = 0;
-		bool UnShow_flag = 0;
+		bool ballUnShow_flag = 0;
 
 		void Init();
 		void ShowBitmap();
@@ -172,7 +185,6 @@ namespace game_framework
 		void OnMouseMove(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
 		void OnRButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
 		void OnRButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-
 		void ballMove(int i);
 		void checkBallCollision(int i);
 		int level = 1;
@@ -184,30 +196,97 @@ namespace game_framework
 
 		Status status = Status::READY;
 
+		static int CGameStateRun::phase;
+		static bool CGameStateRun::sub_phase;
+
 	protected:
 		void OnMove(); // ���ʹC������
 		void OnShow(); // ��ܳo�Ӫ��A���C���e��
 	private:
 		CMovingBitmap background;
 		CMovingBitmap frame;
+		CMovingBitmap bbman;
 
 		int boxTotalLevel = 8;
 		int boxTotalCountinLevel = 7;
-		int total_score_phase1 = 14;
-		int total_score_phase2 = 14;
-		int total_score_phase3 = 14;
-		int total_score_phase4 = 14;
-		int total_score_phase5 = 14;
-		int total_score_phase6 = 14;
+		int total_score_phase[6] = {1,2,3,4,5,6};
 
-		Box box[8][7] = { {Box(1,1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
-						{Box(0), Box(0),Box(0), Box(0), Box(3,1), Box(3),Box(0)},
+
+		//Box box[8][7] = { {Box(5,1), Box(4),Box(3), Box(2), Box(1,1), Box(0),Box(0)},
+		//				{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
+		//				{Box(0), Box(0),Box(0), Box(0), Box(3,1), Box(3),Box(0)},
+		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}
+		//};
+
+		Box box[6][8][7] = {{{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
+
+						{{Box(2), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
+
+						{{Box(3), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
+						
+						{{Box(4), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
+
+						{{Box(5), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
+
+						{{Box(6), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}}
+		};
+
+		Bubble bubble[8][7] = { {Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}
+
+
 		};
 		/*
 		Box box[15][7] = {	{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
@@ -235,19 +314,22 @@ namespace game_framework
 		int currentU_ball_y;
 		int currentD_ball_y;
 
-		int ball_count = 2;
-		int ball_count_reset = 2;
+		int ball_count = 6;
+		int ball_count_reset = 6;
+		int ball_count_load = 8;
 
-		Ball ball[2] = {Ball(223, 540), Ball(203, 520)};
+
+		Ball ball[8] = {Ball(223, 560),Ball(223, 560),Ball(223, 560),Ball(223, 560),Ball(223, 560), Ball(223, 560),Ball(223, 560), Ball(223, 560) };
 
 		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
+		void checkBallAdd();
 		void IsOverlap_Direction(Ball &ball, Box box);
-		
-
-		void show_text_score();
+		void show_text();
+		void win_phase();
+		void lose_phase();
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
