@@ -224,7 +224,7 @@ namespace game_framework
 		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}
 		//};
 
-		Box box[6][8][7] = {{{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
+		Box box[6][8][7] = {{{Box(1), Box(0),Box(1,2), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},

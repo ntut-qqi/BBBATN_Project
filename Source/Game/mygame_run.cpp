@@ -70,11 +70,12 @@ void CGameStateRun::OnMove() // ï¿½ï¿½ï¿½Ê¹Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			ball_return += 1;
 		}
 	}
-
+	//all ball dead
 	if (ball_return == ball_count && status == Status::RUNNING)
 	{
 		status = Status::READY;
 		level += 1;
+		ball_gotoRunning = 0;
 	}
 	//³Ó§Q¶i¤JGAME_STATE_OVER
 
@@ -221,7 +222,7 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // ï¿½Bï¿½zï¿½Æ¹ï¿½ï¿½ï¿½ï¿½Ê§@
 {
-	if (status == Status::READY) {
+	//if (status == Status::READY) {
 		status = Status::RUNNING;
 		// ball_status = Status::RUNNING;
 		for (int i = 0; i < ball_count; i++)
@@ -232,7 +233,7 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // ï¿½Bï¿½zï¿½Æ¹ï¿½
 			ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
 			ball[i].click_flag = 1;
 		}
-	}
+	//}
 	
 }
 
@@ -514,8 +515,11 @@ void CGameStateRun::checkBallCollision(int i)
 							{
 								ball[i].dy *= -1;
 								ball[i].yDirectionChange_flag = 0;
-								box[CGameStateRun::phase - 1][j][k].box_count -= 1;
-								current_score += 1;
+								if (box[CGameStateRun::phase - 1][j][k].Boxtype_flag!=2){
+									box[CGameStateRun::phase - 1][j][k].box_count -= 1;
+									current_score += 1;
+
+								}
 							}
 						}
 						
@@ -616,6 +620,10 @@ void Box::Init()
 	if (Boxtype_flag==1)
 	{
 	this->image.LoadBitmapByString({ "resources/box-eatBall.bmp" }, RGB(0, 0, 0));
+	}
+	else if (Boxtype_flag == 2)
+	{
+		this->image.LoadBitmapByString({ "resources/bottom.bmp" }, RGB(0, 0, 0));
 	}
 	else if (Boxtype_flag==2)
 	{
