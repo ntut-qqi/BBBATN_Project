@@ -211,6 +211,8 @@ namespace game_framework
 		int boxTotalCountinLevel = 7;
 		int total_score_phase[6] = {1,2,3,4,5,6};
 
+		int ball_gotoRunning = 0;
+		int ball_gotoRunning2 = 0;
 
 		//Box box[8][7] = { {Box(5,1), Box(4),Box(3), Box(2), Box(1,1), Box(0),Box(0)},
 		//				{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},

@@ -161,6 +161,7 @@ void CGameStateRun::win_phase() {
 		sub_phase = 1;
 		current_score = 0;
 		level = 0;
+		ball_gotoRunning = 0;
 		status = Status::RUNNING;
 		GotoGameState(GAME_STATE_OVER);
 	}
@@ -177,6 +178,7 @@ void CGameStateRun::lose_phase() {
 		sub_phase = 0;
 		current_score = 0;
 		level = 0;
+		ball_gotoRunning = 0;
 		touch_canva_lose_flag = 0;
 		ball_count = ball_count_reset;
 		for (int i = 0; i < ball_count; i++) {
@@ -280,7 +282,7 @@ void CGameStateRun::OnShow()
 		//}
 		ball[i].ShowBitmap();
 	}
-
+	
 	CDC *pDC = CDDraw::GetBackCDC();
 	for (int i = 0; i < level; i++)
 	{
@@ -322,11 +324,30 @@ void CGameStateRun::checkCanvasCollision()
 			if (ball[i].GetLeft() <= 45 || ball[i].GetLeft() >= 395)
 			{
 				ball[i].dx *= -1;
+				//continue;
 			}
 			if (ball[i].GetTop() <= 164)
 			{
 				ball[i].dy *= -1;
+				//continue;
+
 			}
+			//if (ball[i].GetLeft() == 395 || ball[i].GetLeft() == 396 || ball[i].GetLeft() == 397)
+			//{
+			//	ball[i].dx *= -1;
+			//	break;
+			//}
+			//if (ball[i].GetLeft() == 45 || ball[i].GetLeft() == 46 || ball[i].GetLeft() == 47)
+			//{
+			//	ball[i].dx *= -1;
+			//	break;
+			//}
+			//if (ball[i].GetTop() == 164 || ball[i].GetTop() == 165 || ball[i].GetTop() == 166)
+			//{
+			//	ball[i].dy *= -1;
+			//	break;
+
+			//}
 			if (ball[i].GetTop() >= 564)
 			{
 				// status = Status::READY;
@@ -334,18 +355,26 @@ void CGameStateRun::checkCanvasCollision()
 				ball[i].ball_status = Status::DEAD_Ball;
 				// ball[i].x = ball[i].GetLeft();
 				currentD_ball_y = min(560, int(ball[i].GetTop() + ball[i].dy));
+				//currentD_ball_y = 560;
 				int a;
 				a = abs(ball[i].GetLeft() - 223);
-				for (int j = 0; j < a; j++) {
-					if (ball[i].GetLeft() > 223) {
-						ball[i].SetTopLeft(((ball[i].GetLeft()) - 1), currentD_ball_y);
-						ball[i].RenewCoordinate(((ball[i].GetLeft()) - 1), currentD_ball_y);
-					}
-					else {
-						ball[i].SetTopLeft(((ball[i].GetLeft()) + 1), currentD_ball_y);
-						ball[i].RenewCoordinate(((ball[i].GetLeft()) + 1), currentD_ball_y);
+				if (a > 0) {
+					for (int j = 0; j < a; j++) {
+						if (ball[i].GetLeft() > 223) {
+							ball[i].SetTopLeft(((ball[i].GetLeft()) - 1), currentD_ball_y);
+							ball[i].RenewCoordinate(((ball[i].GetLeft()) - 1), currentD_ball_y);
+						}
+						else {
+							ball[i].SetTopLeft(((ball[i].GetLeft()) + 1), currentD_ball_y);
+							ball[i].RenewCoordinate(((ball[i].GetLeft()) + 1), currentD_ball_y);
+						}
 					}
 				}
+				else {
+					ball[i].SetTopLeft(223, currentD_ball_y);
+					ball[i].RenewCoordinate(223, currentD_ball_y);
+				}
+				
 			}
 			// max min
 			// if (ball[i].GetLeft() + ball[i].dx <= 45)
@@ -386,7 +415,41 @@ void CGameStateRun::checkBoxBallCollision()
 		if (ball[i].ball_status == Status::RUNNING|| ball[i].ball_status == Status::READY)
 		{
 			checkBallCollision(i);
-			ballMove(i);
+			//ballMove(i);
+			if (ball[i].ball_status == Status::READY)
+			{
+				//ball[i].x += 20 * i * ball[i].dx;
+				//ball[i].y += 20 * i * ball[i].dy;
+				//ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+				//if (i == ball_gotoRunning) {
+				//	ball[i].ball_status = Status::RUNNING;
+				//	ball_gotoRunning += 1;
+				//}
+				ball[i].ball_status = Status::RUNNING;
+
+			}
+			if (ball[i].ball_status == Status::RUNNING)
+			{
+				ball[i].x += 3 * ball[i].dx;
+				ball[i].y += 3 * ball[i].dy;
+				ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+				ball[i].RenewCoordinate((int)(ball[i].x), (int)(ball[i].y));
+				//if (ball_gotoRunning == i ) {
+				//	ball_gotoRunning += 1;
+				//	break;
+				//}
+				if (ball_gotoRunning == i && (ball_gotoRunning2<10)) {
+					//ball_gotoRunning += 1;
+					ball_gotoRunning2 += 1;
+					//if(ball_gotoRunning)
+					if (ball_gotoRunning2 == 10) {
+						ball_gotoRunning2 = 0;
+						ball_gotoRunning += 1;
+					}
+					break;
+
+				}
+			}
 		}
 	}
 }
@@ -458,16 +521,22 @@ void CGameStateRun::ballMove(int i)
 {
 	if (ball[i].ball_status == Status::READY)
 	{
-		ball[i].x += 20 * i * ball[i].dx;
-		ball[i].y += 20 * i * ball[i].dy;
-		ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+		//ball[i].x += 20 * i * ball[i].dx;
+		//ball[i].y += 20 * i * ball[i].dy;
+		//ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+		//if (i == ball_gotoRunning) {
+		//	ball[i].ball_status = Status::RUNNING;
+		//	ball_gotoRunning += 1;
+		//}
 		ball[i].ball_status = Status::RUNNING;
+	
 	}
-	else if (ball[i].ball_status == Status::RUNNING)
+	if (ball[i].ball_status == Status::RUNNING)
 	{
 		ball[i].x += 3 * ball[i].dx;
 		ball[i].y += 3 * ball[i].dy;
 		ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
+		ball[i].RenewCoordinate((int)(ball[i].x), (int)(ball[i].y));
 	}
 }
 
