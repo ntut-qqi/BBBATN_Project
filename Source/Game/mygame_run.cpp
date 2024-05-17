@@ -221,16 +221,19 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // �B�z�ƹ����ʧ@
 {
-	status = Status::RUNNING;
-	// ball_status = Status::RUNNING;
-	for (int i = 0; i < ball_count; i++)
-	{
-		ball[i].ball_status = Status::READY;
-		ball[i].mouse_x = point.x;
-		ball[i].mouse_y = point.y;
-		ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
-		ball[i].click_flag = 1;
+	if (status == Status::READY) {
+		status = Status::RUNNING;
+		// ball_status = Status::RUNNING;
+		for (int i = 0; i < ball_count; i++)
+		{
+			ball[i].ball_status = Status::READY;
+			ball[i].mouse_x = point.x;
+			ball[i].mouse_y = point.y;
+			ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
+			ball[i].click_flag = 1;
+		}
 	}
+	
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point) // �B�z�ƹ����ʧ@
@@ -321,10 +324,15 @@ void CGameStateRun::checkCanvasCollision()
 	{
 		if (ball[i].click_flag == 1)
 		{
-			if (ball[i].GetLeft() <= 45 || ball[i].GetLeft() >= 395)
+			if (ball[i].GetLeft() <= 45)
 			{
 				ball[i].dx *= -1;
+				//ball[i].x = max(46, int(ball[i].GetLeft()));
 				//continue;
+			}
+			if (ball[i].GetLeft() >= 395) {
+				ball[i].dx *= -1;
+				//ball[i].x = min(394, int(ball[i].GetLeft()));
 			}
 			if (ball[i].GetTop() <= 164)
 			{
@@ -430,15 +438,17 @@ void CGameStateRun::checkBoxBallCollision()
 			}
 			if (ball[i].ball_status == Status::RUNNING)
 			{
+				
 				ball[i].x += 3 * ball[i].dx;
 				ball[i].y += 3 * ball[i].dy;
 				ball[i].SetTopLeft((int)(ball[i].x), (int)(ball[i].y));
-				ball[i].RenewCoordinate((int)(ball[i].x), (int)(ball[i].y));
+				//ball[i].RenewCoordinate((int)(ball[i].x), (int)(ball[i].y));
+				
 				//if (ball_gotoRunning == i ) {
 				//	ball_gotoRunning += 1;
 				//	break;
 				//}
-				if (ball_gotoRunning == i && (ball_gotoRunning2<10)) {
+				if (ball_gotoRunning == i && (ball_gotoRunning2 < 10)) {
 					//ball_gotoRunning += 1;
 					ball_gotoRunning2 += 1;
 					//if(ball_gotoRunning)
