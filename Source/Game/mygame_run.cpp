@@ -518,14 +518,11 @@ void CGameStateRun::checkBallCollision(int i)
 								if (box[CGameStateRun::phase - 1][j][k].Boxtype_flag!=2){
 									box[CGameStateRun::phase - 1][j][k].box_count -= 1;
 									current_score += 1;
-
 								}
 							}
 						}
-						
 					}
 				}
-				
 			}
 		}
 	}
@@ -543,7 +540,6 @@ void CGameStateRun::ballMove(int i)
 		//	ball_gotoRunning += 1;
 		//}
 		ball[i].ball_status = Status::RUNNING;
-	
 	}
 	if (ball[i].ball_status == Status::RUNNING)
 	{
