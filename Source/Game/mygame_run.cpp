@@ -613,18 +613,15 @@ void Box::Init()
 {
 	box_count = box_count_Init;
 	
-	if (Boxtype_flag==1)
+	if (Boxtype_flag == 1)
 	{
-	this->image.LoadBitmapByString({ "resources/box-eatBall.bmp" }, RGB(0, 0, 0));
+		this->image.LoadBitmapByString({ "resources/boxx-blue.bmp" }, RGB(0, 0, 0));
 	}
 	else if (Boxtype_flag == 2)
 	{
-		this->image.LoadBitmapByString({ "resources/bottom.bmp" }, RGB(0, 0, 0));
+		this->image.LoadBitmapByString({ "resources/boxx-yellow.bmp" }, RGB(0, 0, 0));
 	}
-	else if (Boxtype_flag==2)
-	{
-		this->image.LoadBitmapByString({ "resources/hedgehog.bmp" }, RGB(0, 0, 0));
-	}
+
 	else if (box_count >= 16 && box_count <= 20)
 	{
 		this->image.LoadBitmapByString({"resources/box-blue.bmp"}, RGB(0, 0, 0));
