@@ -297,7 +297,7 @@ namespace game_framework
 						{Box(0), Box(0),Box(7,2), Box(0), Box(0), Box(0),Box(0)},
 						{Box(8,2), Box(8,2),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(9,2),Box(9,2)},
-						{Box(0), Box(0),Box(10,2), Box(0), Box(10,2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(10,2), Box(10,2), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
