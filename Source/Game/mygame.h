@@ -207,9 +207,9 @@ namespace game_framework
 		CMovingBitmap frame;
 		CMovingBitmap bbman;
 
-		int boxTotalLevel = 8;
+		int boxTotalLevel = 15;
 		int boxTotalCountinLevel = 7;
-		int total_score_phase[6] = {1,2,3,4,5,6};
+		int total_score_phase[6] = {22,90,22,100,101,199};
 
 		int ball_gotoRunning = 0;
 		int ball_gotoRunning2 = 0;
@@ -224,7 +224,14 @@ namespace game_framework
 		//				{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}
 		//};
 
-		Box box[6][8][7] = {{{Box(1), Box(0),Box(1,2), Box(0), Box(0), Box(0),Box(0)},
+		Box box[6][15][7] = {{{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(3), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(4), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(5),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(6), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
@@ -233,16 +240,30 @@ namespace game_framework
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
 
-						{{Box(2), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{{Box(1), Box(0),Box(1), Box(0), Box(1), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(2), Box(2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(3), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(4), Box(0), Box(0), Box(4),Box(0)},
+						{Box(0), Box(5),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(6), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(7), Box(0),Box(0)},
+						{Box(0), Box(0),Box(8), Box(0), Box(0), Box(0),Box(8)},
+						{Box(9), Box(0),Box(0), Box(9), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(10), Box(0), Box(10), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
 
-						{{Box(3), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(2,1), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(3,1), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(4), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(5,1),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(6), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
@@ -251,45 +272,153 @@ namespace game_framework
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
 						
-						{{Box(4), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{{Box(1), Box(0),Box(1), Box(0), Box(0), Box(1,1),Box(0)},
+						{Box(0), Box(0),Box(0), Box(2), Box(2,1), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(3,1), Box(0), Box(0),Box(3,1)},
+						{Box(0), Box(0),Box(4,1), Box(0), Box(0), Box(4),Box(0)},
+						{Box(0), Box(5),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(6), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(7,1), Box(0), Box(7,1), Box(0),Box(0)},
+						{Box(0), Box(0),Box(8), Box(0), Box(0), Box(0),Box(8)},
+						{Box(9), Box(0),Box(0), Box(9), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(10,1), Box(0), Box(10), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
 
-						{{Box(5), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{{Box(1), Box(0),Box(1), Box(1), Box(1,2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(2,2), Box(2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(3), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(4,2), Box(4,2),Box(0)},
+						{Box(0), Box(5),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(6,2), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(7,2), Box(0), Box(0), Box(0),Box(0)},
+						{Box(8,2), Box(8,2),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(9,2),Box(9,2)},
+						{Box(0), Box(0),Box(10,2), Box(0), Box(10,2), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
 
-						{{Box(6), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
+						{{Box(0), Box(0),Box(1), Box(1,1), Box(1,2), Box(1),Box(0)},
+						{Box(0), Box(0),Box(2,2), Box(0), Box(2,2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(0), Box(3,2), Box(3,1), Box(0),Box(0)},
+						{Box(0), Box(0),Box(4,1), Box(4,2), Box(4), Box(0),Box(0)},
+						{Box(0), Box(5,1),Box(0), Box(0), Box(5,2), Box(0),Box(0)},
+						{Box(0), Box(0),Box(6,2), Box(6), Box(6,1), Box(0),Box(0)},
+						{Box(0), Box(0),Box(7), Box(7,2), Box(7,1), Box(7),Box(0)},
+						{Box(8,1), Box(0),Box(0), Box(0), Box(0), Box(0),Box(8,2)},
+						{Box(0), Box(0),Box(9,2), Box(9,2), Box(9), Box(0),Box(0)},
+						{Box(0), Box(10,2),Box(0), Box(10,1), Box(0), Box(10,2),Box(0)},
+						{Box(11,1), Box(0),Box(11,2), Box(0), Box(0), Box(0),Box(0)},
+						{Box(0), Box(0),Box(12,2), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
 						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)},
-						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}}
+						{Box(0), Box(0),Box(0), Box(0), Box(0), Box(0),Box(0)}},
 		};
 
-		Bubble bubble[8][7] = { {Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+		Bubble bubble[6][15][7] = { { {Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
 								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
 								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
 								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
 								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
 								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
 								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
 								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}
+								},
+								
+								{ {Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}
+								},
 
+								{{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}
+								},
 
-		};
+								{{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1)},
+								{Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}},
+
+								{{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}},
+
+								{ {Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(1),Bubble()},
+								{Bubble(),Bubble(1),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(1),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()},
+								{Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble(),Bubble()}}};
 		/*
 		Box box[15][7] = {	{Box(1), Box(0),Box(1), Box(0), Box(0), Box(0),Box(0)},
 							{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
@@ -316,14 +445,13 @@ namespace game_framework
 		int currentU_ball_y;
 		int currentD_ball_y;
 
-		int ball_count = 6;
-		int ball_count_reset = 6;
-		int ball_count_load = 8;
+		int ball_count = 1;
+		int ball_count_reset = 1;
+		int ball_count_load = 10;
 
 
-		Ball ball[8] = {Ball(223, 560),Ball(223, 560),Ball(223, 560),Ball(223, 560),Ball(223, 560), Ball(223, 560),Ball(223, 560), Ball(223, 560) };
+		Ball ball[10] = {Ball(223, 560),Ball(223, 560),Ball(223, 560),Ball(223, 560),Ball(223, 560), Ball(223, 560),Ball(223, 560), Ball(223, 560) ,Ball(223, 560),Ball(223, 560) };
 
-		CMovingBitmap question;
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
