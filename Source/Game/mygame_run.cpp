@@ -10,7 +10,7 @@
 
 using namespace game_framework;
 
-int CGameStateRun::phase = 4;
+int CGameStateRun::phase = 1;
 bool CGameStateRun::sub_phase = 0;
 
 
@@ -32,7 +32,7 @@ void CGameStateRun::OnBeginState() // �]�w�C�������һݪ��
 	{
 		for (int j = 0; j < boxTotalCountinLevel; j++)
 		{
-			box[CGameStateRun::phase-1][i][j].Init();
+			box[CGameStateInit::debug_flag][CGameStateRun::phase-1][i][j].Init();
 			bubble[CGameStateRun::phase - 1][i][j].Init();
 		}
 	}
@@ -54,7 +54,7 @@ void CGameStateRun::OnMove() // ���ʹC������
 		{
 			for (int j = 0; j < boxTotalCountinLevel; j++)
 			{
-				box[CGameStateRun::phase-1][i][j].SetTopLeft(47 + j * box[CGameStateRun::phase - 1][i][j].image.GetWidth(), 164 + (level - i - 1) * box[CGameStateRun::phase - 1][i][j].image.GetHeight());
+				box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].SetTopLeft(47 + j * box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].image.GetWidth(), 164 + (level - i - 1) * box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].image.GetHeight());
 				bubble[CGameStateRun::phase - 1][i][j].SetTopLeft(57 + j * 52, 174 + (level - i - 1) * 52);
 
 			}
@@ -84,14 +84,15 @@ void CGameStateRun::OnMove() // ���ʹC������
 		int check_boxlevel_index = 0;
 		check_boxlevel_index = level - 8;
 		for (int i = 0; i < 7; i++) {
-			if (box[CGameStateRun::phase - 1][check_boxlevel_index][i].box_count > 0) {
+			if (box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][check_boxlevel_index][i].box_count > 0) {
 				touch_canva_lose_flag = 1;
 			}
+			
 		}
 	}
 	//if win
 	for (int i = 1; i < 7; i++) {
-		if ((current_score == total_score_phase[i-1]) && (phase == i)) {		//win phase
+		if ((current_score == total_score_phase[CGameStateInit::debug_flag][i-1]) && (phase == i)) {		//win phase
 			win_phase();
 		}	
 	}
@@ -212,7 +213,7 @@ void CGameStateRun::OnInit() // �C������?�ιϧγ]�w
 	{
 		for (int j = 0; j < boxTotalCountinLevel; j++)
 		{
-			box[CGameStateRun::phase - 1][i][j].Init();
+			box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].Init();
 			bubble[CGameStateRun::phase - 1][i][j].Init();
 		}
 	}
@@ -276,12 +277,12 @@ void CGameStateRun::OnShow()
 			if (bubble[CGameStateRun::phase - 1][i][j].IsShow_flag == 1) {
 				bubble[CGameStateRun::phase - 1][i][j].ShowImage();
 			}
-
-			if (box[CGameStateRun::phase - 1][i][j].box_count <= 0)
+			if (box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].box_count <= 0)
 			{
 				continue;
 			}
-			box[CGameStateRun::phase - 1][i][j].ShowImage();
+			box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].ShowImage();
+			
 		}
 	}
 	for (int i = 0; i < ball_count; i++)
@@ -301,7 +302,7 @@ void CGameStateRun::OnShow()
 	{
 		for (int j = 0; j < boxTotalCountinLevel; j++)
 		{
-			box[CGameStateRun::phase - 1][i][j].ShowText(pDC);
+			box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][i][j].ShowText(pDC);
 		}
 	}
 	CDDraw::ReleaseBackCDC();
@@ -484,15 +485,15 @@ void CGameStateRun::checkBallCollision(int i)
 					ball_count += 1;
 					bubble[CGameStateRun::phase - 1][j][k].IsShow_flag = 0;
 				}
-				if (box[CGameStateRun::phase - 1][j][k].box_count > 0)
+				if (box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].box_count > 0)
 				{
-					IsOverlap_Direction(ball[i], box[CGameStateRun::phase - 1][j][k]);
-					if (CMovingBitmap::IsOverlap(box[CGameStateRun::phase - 1][j][k].image, ball[i].ball_image))
+					IsOverlap_Direction(ball[i], box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k]);
+					if (CMovingBitmap::IsOverlap(box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].image, ball[i].ball_image))
 					{
-						if (box[CGameStateRun::phase - 1][j][k].Boxtype_flag == 1) {
-							if (box[CGameStateRun::phase - 1][j][k].box_count > 0 ) {
+						if (box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].Boxtype_flag == 1) {
+							if (box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].box_count > 0 ) {
 								//ball[i].ballUnShow_flag = 1;
-								box[CGameStateRun::phase - 1][j][k].box_count -= 1;
+								box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].box_count -= 1;
 								current_score += 1;
 								ball[i].SetTopLeft(223, 560);
 								ball[i].RenewCoordinate(223, 560);
@@ -515,15 +516,15 @@ void CGameStateRun::checkBallCollision(int i)
 							{
 								ball[i].dx *= -1;
 								ball[i].xDirectionChange_flag = 0;
-								box[CGameStateRun::phase - 1][j][k].box_count -= 1;
+								box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].box_count -= 1;
 								current_score += 1;
 							}
 							else if (ball[i].yDirectionChange_flag == 1)
 							{
 								ball[i].dy *= -1;
 								ball[i].yDirectionChange_flag = 0;
-								if (box[CGameStateRun::phase - 1][j][k].Boxtype_flag!=2){
-									box[CGameStateRun::phase - 1][j][k].box_count -= 1;
+								if (box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].Boxtype_flag!=2){
+									box[CGameStateInit::debug_flag][CGameStateRun::phase - 1][j][k].box_count -= 1;
 									current_score += 1;
 								}
 							}
@@ -610,17 +611,17 @@ void CGameStateRun::show_text()
 
 	if (current_score < 20) {
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-		CTextDraw::Print(pDC, 45, 110, to_string(total_score_phase[phase - 1]));
+		CTextDraw::Print(pDC, 45, 110, to_string(total_score_phase[CGameStateInit::debug_flag][phase - 1]));
 
 	}
 	else if (current_score < 100) {
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[phase - 1]));
+		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[CGameStateInit::debug_flag][phase - 1]));
 
 	}
 	else {
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[phase - 1]));
+		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[CGameStateInit::debug_flag][phase - 1]));
 
 	}
 
