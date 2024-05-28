@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "../Core/Resource.h"
 #include <mmsystem.h>
 #include <ddraw.h>
@@ -9,7 +9,7 @@
 
 using namespace game_framework;
 /////////////////////////////////////////////////////////////////////////////
-// ³o­Óclass¬°¹CÀ¸ªº¹CÀ¸¶}ÀYµe­±ª«¥ó
+// é€™å€‹classç‚ºéŠæˆ²çš„éŠæˆ²é–‹é ­ç•«é¢ç‰©ä»¶
 /////////////////////////////////////////////////////////////////////////////
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
@@ -19,17 +19,17 @@ CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 void CGameStateInit::OnInit()
 {
 	//
-	// ·í¹Ï«Ü¦h®É¡AOnInit¸ü¤J©Ò¦³ªº¹Ï­nªá«Ü¦h®É¶¡¡C¬°Á×§Kª±¹CÀ¸ªº¤H
-	//     µ¥ªº¤£­@·Ğ¡A¹CÀ¸·|¥X²{¡uLoading ...¡v¡AÅã¥ÜLoadingªº¶i«×¡C
+	// ç•¶åœ–å¾ˆå¤šæ™‚ï¼ŒOnInitè¼‰å…¥æ‰€æœ‰çš„åœ–è¦èŠ±å¾ˆå¤šæ™‚é–“ã€‚ç‚ºé¿å…ç©éŠæˆ²çš„äºº
+	//     ç­‰çš„ä¸è€ç…©ï¼ŒéŠæˆ²æœƒå‡ºç¾ã€ŒLoading ...ã€ï¼Œé¡¯ç¤ºLoadingçš„é€²åº¦ã€‚
 	//
-	ShowInitProgress(0, "Start Initialize...");	// ¤@¶}©lªºloading¶i«×¬°0%
+	ShowInitProgress(0, "Start Initialize...");	// ä¸€é–‹å§‹çš„loadingé€²åº¦ç‚º0%
 	//
-	// ¶}©l¸ü¤J¸ê®Æ
+	// é–‹å§‹è¼‰å…¥è³‡æ–™
 	load_background();
 	//
-	//Sleep(1000);				// ©ñºC¡A¥H«K¬İ²M·¡¶i«×¡A¹ê»Ú¹CÀ¸½Ğ§R°£¦¹Sleep
+	//Sleep(1000);				// æ”¾æ…¢ï¼Œä»¥ä¾¿çœ‹æ¸…æ¥šé€²åº¦ï¼Œå¯¦éš›éŠæˆ²è«‹åˆªé™¤æ­¤Sleep
 	//
-	// ¦¹OnInit°Ê§@·|±µ¨ìCGameStaterRun::OnInit()¡A©Ò¥H¶i«×ÁÙ¨S¨ì100%
+	// æ­¤OnInitå‹•ä½œæœƒæ¥åˆ°CGameStaterRun::OnInit()ï¼Œæ‰€ä»¥é€²åº¦é‚„æ²’åˆ°100%
 	//
 }
 
@@ -39,6 +39,31 @@ void CGameStateInit::OnBeginState()
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	if (nChar == 0x31) // 0x31 æ˜¯æ•°å­—é”® "1" çš„è™šæ‹Ÿé”®ä»£ç 
+	{
+		CGameStateRun::phase = 1;
+		show_text(1);
+	}
+	else if (nChar == 0x32) {
+		CGameStateRun::phase = 2;
+		show_text(2);
+	}
+	else if (nChar == 0x33) {
+		CGameStateRun::phase = 3;
+		show_text(3);
+	}
+	else if (nChar == 0x34) {
+		CGameStateRun::phase = 4;
+		show_text(4);
+	}
+	else if (nChar == 0x35) {
+		CGameStateRun::phase = 5;
+		show_text(5);
+	}
+	else if (nChar == 0x36) {
+		CGameStateRun::phase = 6;
+		show_text(6);
+	}
 
 }
 
@@ -83,14 +108,14 @@ void CGameStateInit::OnShow()
 			ball_flag = 0;
 		}
 
-		// ¼ÒÀÀ²yªº¼u¸õ
+		// æ¨¡æ“¬çƒçš„å½ˆè·³
 		if (ball_flag == 0) {
-			// Åı²y¦V¤U²¾°Ê
+			// è®“çƒå‘ä¸‹ç§»å‹•
 			ball.SetTopLeft(ball.GetLeft(), ball.GetTop() + 1);
 
 		}
 		else if (ball_flag == 1) {
-			// Åı²y¦V¤W²¾°Ê
+			// è®“çƒå‘ä¸Šç§»å‹•
 			ball.SetTopLeft(ball.GetLeft(), ball.GetTop() - 1);
 		}
 	}
@@ -110,4 +135,14 @@ void CGameStateInit::load_background() {
 
 	start.LoadBitmapByString({ "resources/play-button.bmp" }, RGB(0, 0, 0));
 	start.SetTopLeft(143, 548);
+}
+
+void CGameStateInit::show_text(int phase) {
+	CDC *pDC = CDDraw::GetBackCDC();
+
+	CTextDraw::ChangeFontLog(pDC, 45, "SquareFont", RGB(255, 255, 255), 500);
+	//CTextDraw::Print(pDC, 400, 80, "Set phase to " + to_string(current_score));
+	CTextDraw::Print(pDC, 400, 80, "Set phase to ");
+
+	CDDraw::ReleaseBackCDC();
 }

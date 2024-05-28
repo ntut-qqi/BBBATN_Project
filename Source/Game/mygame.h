@@ -154,6 +154,7 @@ namespace game_framework
 	protected:
 		void OnShow(); // ��ܳo�Ӫ��A���C���e��
 	private:
+		void show_text(int phase);
 		void load_background();
 
 		CMovingBitmap logo; // csie��logo
@@ -213,6 +214,7 @@ namespace game_framework
 
 		int ball_gotoRunning = 0;
 		int ball_gotoRunning2 = 0;
+
 
 		//Box box[8][7] = { {Box(5,1), Box(4),Box(3), Box(2), Box(1,1), Box(0),Box(0)},
 		//				{Box(0), Box(2),Box(0), Box(2), Box(0), Box(0),Box(2)},
