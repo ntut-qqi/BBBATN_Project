@@ -11,7 +11,7 @@ using namespace game_framework;
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲開頭畫面物件
 /////////////////////////////////////////////////////////////////////////////
-bool CGameStateInit::debug_flag = 0;
+//bool CGameStateInit::debug_flag = 0;
 
 CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 {
@@ -65,11 +65,15 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		CGameStateRun::phase = 6;
 		show_text(6);
 	}
-	else if (nChar == 0x44) {	//D
-		debug_flag = 1;
+	else if (nChar == 0x44) {	//D 
+		CGameStateRun::debug_flag = 1;
+		//debug_flag = 1;
+		//CGameStateRun::ReadMap();
 	}
 	else if (nChar == 0x46) {	//F
-		debug_flag = 0;
+		CGameStateRun::debug_flag = 0;
+
+		//debug_flag = 0;
 	}
 
 }

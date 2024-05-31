@@ -15,8 +15,10 @@
 using namespace std;
 using namespace game_framework;
 
-int CGameStateRun::phase = 4;
+int CGameStateRun::phase = 1;
 bool CGameStateRun::sub_phase = 0;
+bool CGameStateRun::debug_flag = 0;
+
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -63,6 +65,8 @@ void CGameStateRun::OnInit() // �C������?�ιϧγ]�w
 
 void CGameStateRun::OnBeginState() // �]�w�C�������һݪ��ܼ�
 {
+	ReadMap();
+	ReadBubble();
 	for (int i = 0; i < boxTotalLevel; i++)
 	{
 		for (int j = 0; j < boxTotalCountinLevel; j++)
@@ -129,7 +133,7 @@ void CGameStateRun::OnMove() // ���ʹC������
 	}
 	//if win
 	for (int i = 1; i < 7; i++) {
-		if ((current_score == total_score_phase[CGameStateInit::debug_flag][i-1]) && (phase == i)) {		//win phase
+		if ((current_score == total_score_phase[debug_flag][i-1]) && (phase == i)) {		//win phase
 			win_phase();
 		}	
 	}
@@ -476,11 +480,11 @@ void CGameStateRun::checkBoxBallCollision()
 				//	ball_gotoRunning += 1;
 				//	break;
 				//}
-				if (ball_gotoRunning == i && (ball_gotoRunning2 < 6)) {
+				if (ball_gotoRunning == i && (ball_gotoRunning2 < 8)) {
 					//ball_gotoRunning += 1;
 					ball_gotoRunning2 += 1;
 					//if(ball_gotoRunning)
-					if (ball_gotoRunning2 == 6) {
+					if (ball_gotoRunning2 == 8) {
 						ball_gotoRunning2 = 0;
 						ball_gotoRunning += 1;
 					}
@@ -621,7 +625,7 @@ void CGameStateRun::show_text()
 	}
 	
 	CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-	CTextDraw::Print(pDC, 250, 550, "x"+to_string(ball_count));
+	CTextDraw::Print(pDC, 200, 540, "x"+to_string(ball_count));
 	CTextDraw::ChangeFontLog(pDC, 35, "SquareFont", RGB(255, 255, 255), 500);
 	CTextDraw::Print(pDC, 150, 85, "level "+to_string(phase));
 
@@ -631,17 +635,17 @@ void CGameStateRun::show_text()
 
 	if (current_score < 20) {
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-		CTextDraw::Print(pDC, 45, 110, to_string(total_score_phase[CGameStateInit::debug_flag][phase - 1]));
+		CTextDraw::Print(pDC, 45, 110, to_string(total_score_phase[debug_flag][phase - 1]));
 
 	}
 	else if (current_score < 100) {
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[CGameStateInit::debug_flag][phase - 1]));
+		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[debug_flag][phase - 1]));
 
 	}
 	else {
 		CTextDraw::ChangeFontLog(pDC, 20, "SquareFont", RGB(255, 255, 255), 500);
-		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[CGameStateInit::debug_flag][phase - 1]));
+		CTextDraw::Print(pDC, 45-5, 110, to_string(total_score_phase[debug_flag][phase - 1]));
 
 	}
 
@@ -653,7 +657,7 @@ void CGameStateRun::show_text()
 
 void CGameStateRun::ReadMap() {
 	std::ostringstream oss;
-	oss << "map/map" << CGameStateInit::debug_flag << "_" << CGameStateRun::phase << ".txt";
+	oss << "map/map" << CGameStateRun::debug_flag << "_" << CGameStateRun::phase << ".txt";
 	std::string formattedString = oss.str();
 	ifstream ifs(formattedString);
 	int DIM1 = 15;

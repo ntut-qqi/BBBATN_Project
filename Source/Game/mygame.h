@@ -150,7 +150,7 @@ namespace game_framework
 		void OnBeginState();						   // �]�w�C�������һݪ��ܼ�
 		void OnKeyUp(UINT, UINT, UINT);				   // �B�z��LUp���ʧ@
 		void OnLButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
-		static bool CGameStateInit::debug_flag;
+		//static bool CGameStateInit::debug_flag;
 
 	protected:
 		void OnShow(); // ��ܳo�Ӫ��A���C���e��
@@ -200,6 +200,11 @@ namespace game_framework
 
 		static int CGameStateRun::phase;
 		static bool CGameStateRun::sub_phase;
+		static bool CGameStateRun::debug_flag;
+
+
+		void ReadMap();
+		void ReadBubble();
 
 	protected:
 		void OnMove(); // ���ʹC������
@@ -269,8 +274,7 @@ namespace game_framework
 		void show_text();
 		void win_phase();
 		void lose_phase();
-		void ReadMap();
-		void ReadBubble();
+		
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
