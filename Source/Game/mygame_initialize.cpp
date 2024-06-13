@@ -19,19 +19,11 @@ CGameStateInit::CGameStateInit(CGame *g) : CGameState(g)
 
 void CGameStateInit::OnInit()
 {
-	//
-	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
-	//     等的不耐煩，遊戲會出現「Loading ...」，顯示Loading的進度。
-	//
+	
 	ShowInitProgress(0, "Start Initialize...");	// 一開始的loading進度為0%
-	//
-	// 開始載入資料
+	
 	load_background();
-	//
-	//Sleep(1000);				// 放慢，以便看清楚進度，實際遊戲請刪除此Sleep
-	//
-	// 此OnInit動作會接到CGameStaterRun::OnInit()，所以進度還沒到100%
-	//
+	
 }
 
 void CGameStateInit::OnBeginState()
@@ -40,7 +32,7 @@ void CGameStateInit::OnBeginState()
 
 void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == 0x31) // 0x31 是数字键 "1" 的虚拟键代码
+	if (nChar == 0x31) 
 	{
 		CGameStateRun::phase = 1;
 		show_text(1);
@@ -67,13 +59,11 @@ void CGameStateInit::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	else if (nChar == 0x44) {	//D 
 		CGameStateRun::debug_flag = 1;
-		//debug_flag = 1;
-		//CGameStateRun::ReadMap();
+		
 	}
 	else if (nChar == 0x46) {	//F
 		CGameStateRun::debug_flag = 0;
 
-		//debug_flag = 0;
 	}
 
 }
@@ -152,7 +142,6 @@ void CGameStateInit::show_text(int phase) {
 	CDC *pDC = CDDraw::GetBackCDC();
 
 	CTextDraw::ChangeFontLog(pDC, 45, "SquareFont", RGB(255, 255, 255), 500);
-	//CTextDraw::Print(pDC, 400, 80, "Set phase to " + to_string(current_score));
 	CTextDraw::Print(pDC, 400, 80, "Set phase to ");
 
 	CDDraw::ReleaseBackCDC();

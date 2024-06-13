@@ -50,6 +50,7 @@ namespace game_framework
 		AUDIO_LAKE, // 1
 		AUDIO_NTUT	// 2
 	};
+
 	class Bubble {
 	public:
 		Bubble(int IsBubble_flag = 0,int x = -100, int y = -100);
@@ -88,17 +89,6 @@ namespace game_framework
 		int Boxtype_flag;
 
 	};
-
-	//class Box_eat : public Box {
-	//public:
-	//	int box_count;
-	//	int x;
-	//	int y;
-	//	int box_count_Init;
-	//	bool Box_eat_flag;
-	//	// Constructor
-	//	Box_eat(int box_count, int x = -100, int y = -100, bool Box_eat_flag = 0);
-	//};
 
 	class Ball
 	{
@@ -146,10 +136,10 @@ namespace game_framework
 	{
 	public:
 		CGameStateInit(CGame *g);
-		void OnInit();								   // �C������Ȥιϧγ]�w
-		void OnBeginState();						   // �]�w�C�������һݪ��ܼ�
-		void OnKeyUp(UINT, UINT, UINT);				   // �B�z��LUp���ʧ@
-		void OnLButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
+		void OnInit();								   
+		void OnBeginState();						   
+		void OnKeyUp(UINT, UINT, UINT);				   
+		void OnLButtonDown(UINT nFlags, CPoint point); 
 		//static bool CGameStateInit::debug_flag;
 
 	protected:
@@ -158,7 +148,7 @@ namespace game_framework
 		void show_text(int phase);
 		void load_background();
 
-		CMovingBitmap logo; // csie��logo
+		CMovingBitmap logo; 
 		CMovingBitmap background;
 		CMovingBitmap character;
 		CMovingBitmap ball;
@@ -178,16 +168,15 @@ namespace game_framework
 	public:
 		CGameStateRun(CGame *g);
 		~CGameStateRun();
-		void OnBeginState(); // �]�w�C�������һݪ��ܼ�
-		void OnInit();		 // �C������Ȥιϧγ]�w
+		void OnBeginState(); 
+		void OnInit();		 
 		void OnKeyDown(UINT, UINT, UINT);
 		void OnKeyUp(UINT, UINT, UINT);
-		void OnLButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
-		void OnLButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-		void OnMouseMove(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-		void OnRButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
-		void OnRButtonUp(UINT nFlags, CPoint point);   // �B�z�ƹ����ʧ@
-		void ballMove(int i);
+		void OnLButtonDown(UINT nFlags, CPoint point); 
+		void OnLButtonUp(UINT nFlags, CPoint point);   
+		void OnMouseMove(UINT nFlags, CPoint point);   
+		void OnRButtonDown(UINT nFlags, CPoint point); 
+		void OnRButtonUp(UINT nFlags, CPoint point);   
 		void checkBallCollision(int i);
 		int level = 1;
 		bool click_flag = 0;
@@ -269,7 +258,6 @@ namespace game_framework
 		void load_background();
 		void checkCanvasCollision();
 		void checkBoxBallCollision();
-		void checkBallAdd();
 		void IsOverlap_Direction(Ball &ball, Box box);
 		void show_text();
 		void win_phase();
@@ -286,16 +274,16 @@ namespace game_framework
 	{
 	public:
 		CGameStateOver(CGame *g);
-		void OnLButtonDown(UINT nFlags, CPoint point); // �B�z�ƹ����ʧ@
-		void OnBeginState();						   // �]�w�C�������һݪ��ܼ�
+		void OnLButtonDown(UINT nFlags, CPoint point);
+		void OnBeginState();						   
 		void OnInit();
 
 	protected:
-		void OnMove(); // ���ʹC������
-		void OnShow(); // ��ܳo�Ӫ��A���C���e��
+		void OnMove();
+		void OnShow(); 
 	private:
 		CMovingBitmap background;
-		int counter; // �˼Ƥ��p�ƾ�
+		int counter; 
 		void show_text();
 		void load_background();
 	};
