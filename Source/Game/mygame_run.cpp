@@ -205,15 +205,18 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point) // �B�z�ƹ����ʧ@
 {
-	status = Status::RUNNING;
-	for (int i = 0; i < ball_count; i++)
-	{
-		ball[i].ball_status = Status::READY;
-		ball[i].mouse_x = point.x;
-		ball[i].mouse_y = point.y;
-		ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
-		ball[i].click_flag = 1;
-	}	
+	if (status == Status::READY) {
+		status = Status::RUNNING;
+		for (int i = 0; i < ball_count; i++)
+		{
+			ball[i].ball_status = Status::READY;
+			ball[i].mouse_x = point.x;
+			ball[i].mouse_y = point.y;
+			ball[i].Ball_shot(ball[i].x, ball[i].y, ball[i].mouse_x, ball[i].mouse_y);
+			ball[i].click_flag = 1;
+		}	
+	}
+	
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point) // �B�z�ƹ����ʧ@
